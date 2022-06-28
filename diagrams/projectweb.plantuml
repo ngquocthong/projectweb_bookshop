@@ -1,0 +1,101 @@
+@startuml
+skinparam linetype ortho
+
+class admin{
+    + id: int
+    + username: string
+    + password: string
+    + email: string 
+    + phone: text
+}
+
+class reader{
+    + id: int
+    + username: string
+    + password: string
+    + email: string
+    + phone: text
+    + firstname: string
+    + lastname: string
+    + gender: boolean
+    + dateofbirth: data
+    + vallet: double
+}
+
+class category{
+    + id: int 
+    + name: string
+    + description: string
+}
+
+class publiser{
+    + id: int
+    + name: string
+}
+
+class book{
+    + id: int
+    + name: string
+    + price: double
+    + description: string
+    + publishdate: date 
+    + image: string
+    + rate: int
+    + language: string
+    + printlength: int
+}
+
+class cart{
+    + id: int
+    + total: double
+}
+
+class feedback{
+    + id: int
+    + content: string
+    + datetime: datetime
+}
+
+class order{
+    + id: into
+    + date: data
+    + total: double
+}
+
+class orderdetails{
+    + id: int
+    + price: double
+    + total: double
+}
+
+class author{
+    + id: int
+    + username: string
+    + password: string
+    + email: string
+    + phone: text
+    + fullname: string
+    + gender: boolean
+    + dateofbirth: data
+    + wallet: double
+    + rate: int
+
+}
+
+class authorbook{
+    + id: int
+}
+
+
+reader "1" -- "*" cart
+cart "1" -- "*" book
+reader "1" -- "*" order
+category "1" -- "*" book
+publiser "1" -- "*" book
+admin "1" -- "*" reader
+
+(reader,book) .. feedback
+(order,book) .. orderdetails
+(author,book) .. authorbook
+
+@enduml
