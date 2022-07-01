@@ -1,0 +1,69 @@
+{
+  "commands": [
+    {
+      "id": "c01c35de-637c-4154-9279-0eb296ff1e76",
+      "name": "create symfony project",
+      "commandLine": "symfony new --full basic_crud"
+    },
+    {
+      "id": "7022961a-c985-44f0-9526-ad93a5901289",
+      "name": "start symfony server",
+      "commandLine": "symfony server:start"
+    },
+    {
+      "id": "a556a307-6c2d-4a44-a7c2-12dde7cbe2db",
+      "name": "create database ",
+      "commandLine": "php bin/console doctrine:database:create"
+    },
+    {
+      "id": "ba641736-6219-47fc-a502-88fbd604d744",
+      "name": "make entity",
+      "commandLine": "php bin/console make:entity"
+    },
+    {
+      "id": "9ec0aff4-03c0-4b7f-a60d-8114dedca941",
+      "name": "make migration",
+      "commandLine": "php bin/console make:migration"
+    },
+    {
+      "id": "1255351e-8b6e-413b-ba4e-225261a91927",
+      "name": "make migrate",
+      "commandLine": "php bin/console doctrine:migrations:migrate"
+    },
+    {
+      "id": "51f86a0e-2292-4406-8157-af622f93474f",
+      "name": "start fixture",
+      "commandLine": "composer require orm-fixtures --dev"
+    },
+    {
+      "id": "72918869-0d6c-4900-8a61-3a8a3a008614",
+      "name": "apply fixture",
+      "commandLine": "php bin/console make:fixtures"
+    },
+    {
+      "id": "0d39a0d4-2ebe-4991-9cf0-e412975233a7",
+      "name": "load fixture",
+      "commandLine": "php bin/console doctrine:fixtures:load"
+    },
+    {
+      "id": "ca063195-36e5-41c3-b375-456bd3dc4e1d",
+      "name": "make crud",
+      "commandLine": "php bin/console make:crud"
+    },
+    {
+      "id": "f8345513-4286-4db0-a0da-01cfd716c48b",
+      "name": "make controller",
+      "commandLine": "php bin/console make:controller"
+    },
+    {
+      "id": "575a020b-15de-401b-9d06-cc11e6869653",
+      "name": "debug",
+      "commandLine": "php bin/console debug:router"
+    },
+    {
+      "id": "a9952088-55ad-4ce3-af9c-296a56f8ecb5",
+      "name": "make form",
+      "commandLine": "php bin/console make:form"
+    }
+  ]
+}
