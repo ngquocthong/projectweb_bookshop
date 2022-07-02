@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
@@ -33,6 +35,21 @@ class Book
 
     #[ORM\Column(type: 'integer')]
     private $printlength;
+
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Feedback::class)]
+    private $feedback;
+
+    #[ORM\ManyToOne(targetEntity: Cart::class, inversedBy: 'books')]
+    private $cart;
+
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: OrderDetails::class)]
+    private $orderdetails;
+
+    public function __construct()
+    {
+        $this->feedback = new ArrayCollection();
+        $this->orderdetails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +136,78 @@ class Book
     public function setPrintlength(int $printlength): self
     {
         $this->printlength = $printlength;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Feedback>
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback[] = $feedback;
+            $feedback->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getBook() === $this) {
+                $feedback->setBook(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): self
+    {
+        $this->cart = $cart;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderdetails(): Collection
+    {
+        return $this->orderdetails;
+    }
+
+    public function addOrderdetail(OrderDetails $orderdetail): self
+    {
+        if (!$this->orderdetails->contains($orderdetail)) {
+            $this->orderdetails[] = $orderdetail;
+            $orderdetail->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderdetail(OrderDetails $orderdetail): self
+    {
+        if ($this->orderdetails->removeElement($orderdetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderdetail->getBook() === $this) {
+                $orderdetail->setBook(null);
+            }
+        }
 
         return $this;
     }

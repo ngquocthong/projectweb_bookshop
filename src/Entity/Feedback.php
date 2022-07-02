@@ -19,6 +19,9 @@ class Feedback
     #[ORM\Column(type: 'datetime')]
     private $datetime;
 
+    #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'feedback')]
+    private $book;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Feedback
     public function setDatetime(\DateTimeInterface $datetime): self
     {
         $this->datetime = $datetime;
+
+        return $this;
+    }
+
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    public function setBook(?Book $book): self
+    {
+        $this->book = $book;
 
         return $this;
     }
