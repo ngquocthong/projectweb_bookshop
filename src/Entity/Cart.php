@@ -21,6 +21,9 @@ class Cart
     #[ORM\OneToMany(mappedBy: 'cart', targetEntity: Book::class)]
     private $books;
 
+    #[ORM\ManyToOne(targetEntity: Reader::class, inversedBy: 'cart')]
+    private $reader;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -69,6 +72,18 @@ class Cart
                 $book->setCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReader(): ?Reader
+    {
+        return $this->reader;
+    }
+
+    public function setReader(?Reader $reader): self
+    {
+        $this->reader = $reader;
 
         return $this;
     }

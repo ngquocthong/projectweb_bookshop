@@ -22,6 +22,9 @@ class Orderdetails
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'orderdetails')]
     private $book;
 
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'orderdetails')]
+    private $orders;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Orderdetails
     public function setBook(?Book $book): self
     {
         $this->book = $book;
+
+        return $this;
+    }
+
+    public function getOrders(): ?Order
+    {
+        return $this->orders;
+    }
+
+    public function setOrders(?Order $orders): self
+    {
+        $this->orders = $orders;
 
         return $this;
     }

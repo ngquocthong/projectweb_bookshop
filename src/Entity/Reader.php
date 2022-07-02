@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReaderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReaderRepository::class)]
@@ -39,6 +41,22 @@ class Reader
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
     private $wallet;
+
+    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: feedback::class)]
+    private $feedback;
+
+    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: cart::class)]
+    private $cart;
+
+    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Order::class)]
+    private $orders;
+
+    public function __construct()
+    {
+        $this->feedback = new ArrayCollection();
+        $this->cart = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -149,6 +167,96 @@ class Reader
     public function setWallet(string $wallet): self
     {
         $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, feedback>
+     */
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function addFeedback(feedback $feedback): self
+    {
+        if (!$this->feedback->contains($feedback)) {
+            $this->feedback[] = $feedback;
+            $feedback->setReader($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(feedback $feedback): self
+    {
+        if ($this->feedback->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getReader() === $this) {
+                $feedback->setReader(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, cart>
+     */
+    public function getCart(): Collection
+    {
+        return $this->cart;
+    }
+
+    public function addCart(cart $cart): self
+    {
+        if (!$this->cart->contains($cart)) {
+            $this->cart[] = $cart;
+            $cart->setReader($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(cart $cart): self
+    {
+        if ($this->cart->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getReader() === $this) {
+                $cart->setReader(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setReader($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getReader() === $this) {
+                $order->setReader(null);
+            }
+        }
 
         return $this;
     }

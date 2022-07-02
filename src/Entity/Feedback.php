@@ -22,6 +22,9 @@ class Feedback
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'feedback')]
     private $book;
 
+    #[ORM\ManyToOne(targetEntity: Reader::class, inversedBy: 'feedback')]
+    private $reader;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Feedback
     public function setBook(?Book $book): self
     {
         $this->book = $book;
+
+        return $this;
+    }
+
+    public function getReader(): ?Reader
+    {
+        return $this->reader;
+    }
+
+    public function setReader(?Reader $reader): self
+    {
+        $this->reader = $reader;
 
         return $this;
     }
