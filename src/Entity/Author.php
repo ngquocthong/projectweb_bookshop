@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AuthorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
@@ -39,6 +41,14 @@ class Author
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
     private $rate;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Authorbook::class)]
+    private $author;
+
+    public function __construct()
+    {
+        $this->author = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -149,6 +159,36 @@ class Author
     public function setRate(string $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Authorbook>
+     */
+    public function getAuthor(): Collection
+    {
+        return $this->author;
+    }
+
+    public function addAuthor(Authorbook $author): self
+    {
+        if (!$this->author->contains($author)) {
+            $this->author[] = $author;
+            $author->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthor(Authorbook $author): self
+    {
+        if ($this->author->removeElement($author)) {
+            // set the owning side to null (unless already changed)
+            if ($author->getAuthor() === $this) {
+                $author->setAuthor(null);
+            }
+        }
 
         return $this;
     }
