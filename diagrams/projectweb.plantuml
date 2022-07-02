@@ -19,7 +19,7 @@ class reader{
     + lastname: string
     + gender: boolean
     + dateofbirth: date
-    + wallet: double
+    + wallet: decimal
 }
 
 class category{
@@ -36,7 +36,7 @@ class publiser{
 class book{
     + id: int
     + name: string
-    + price: double
+    + price: decimal
     + description: string
     + publishdate: date
     + image: string
@@ -47,7 +47,7 @@ class book{
 
 class cart{
     + id: int
-    + total: double
+    + total: decimal
 }
 
 class feedback{
@@ -59,13 +59,13 @@ class feedback{
 class order{
     + id: into
     + date: data
-    + total: double
+    + total: decimal
 }
 
 class orderdetails{
     + id: int
-    + price: double
-    + total: double
+    + price: decimal
+    + total: decimal
 }
 
 class author{
@@ -76,8 +76,8 @@ class author{
     + phone: string
     + fullname: string
     + gender: boolean
-    + dateofbirth: data
-    + wallet: double
+    + dateofbirth: date
+    + wallet: decimal
     + rate: int
 }
 
@@ -90,7 +90,7 @@ cart "1" -- "*" book
 reader "1" -- "*" order
 category "1" -- "*" book
 publiser "1" -- "*" book
-admin "1" -- "*" reader
+
 
 (reader,book) .. feedback
 (order,book) .. orderdetails
