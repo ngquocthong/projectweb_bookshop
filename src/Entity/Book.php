@@ -45,10 +45,20 @@ class Book
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: OrderDetails::class)]
     private $orderdetails;
 
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Authorbook::class)]
+    private $book;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'category')]
+    private $category;
+
+    #[ORM\ManyToOne(targetEntity: Publisher::class, inversedBy: 'publisher')]
+    private $publisher;
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
         $this->orderdetails = new ArrayCollection();
+        $this->book = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,6 +218,60 @@ class Book
                 $orderdetail->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Authorbook>
+     */
+    public function getBook(): Collection
+    {
+        return $this->book;
+    }
+
+    public function addBook(Authorbook $book): self
+    {
+        if (!$this->book->contains($book)) {
+            $this->book[] = $book;
+            $book->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Authorbook $book): self
+    {
+        if ($this->book->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getBook() === $this) {
+                $book->setBook(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPublisher(): ?Publisher
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(?Publisher $publisher): self
+    {
+        $this->publisher = $publisher;
 
         return $this;
     }
