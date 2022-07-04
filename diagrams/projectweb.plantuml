@@ -70,15 +70,11 @@ class orderdetails{
 
 class author{
     + id: int
-    + username: string
-    + password: string
     + email: string
     + phone: string
     + fullname: string
     + gender: boolean
     + dateofbirth: date
-    + wallet: decimal
-    + rate: int
 }
 
 class authorbook{

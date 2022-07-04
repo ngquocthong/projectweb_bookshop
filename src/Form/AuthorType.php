@@ -6,6 +6,7 @@ use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AuthorType extends AbstractType
 {
@@ -15,10 +16,14 @@ class AuthorType extends AbstractType
             ->add('email')
             ->add('phone')
             ->add('fullname')
-            ->add('gender')
+            ->add('gender', ChoiceType::class, [
+                'choices'  => [
+                    'Other' => null,
+                    'Male' => true,
+                    'Female' => false,
+                ],
+            ])
             ->add('dateofbirth')
-            ->add('wallet')
-            ->add('rate')
         ;
     }
 

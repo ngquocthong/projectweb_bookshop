@@ -30,11 +30,6 @@ class Author
     #[ORM\Column(type: 'date')]
     private $dateofbirth;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
-    private $wallet;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
-    private $rate;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Authorbook::class)]
     private $author;
@@ -105,30 +100,6 @@ class Author
     public function setDateofbirth(\DateTimeInterface $dateofbirth): self
     {
         $this->dateofbirth = $dateofbirth;
-
-        return $this;
-    }
-
-    public function getWallet(): ?string
-    {
-        return $this->wallet;
-    }
-
-    public function setWallet(string $wallet): self
-    {
-        $this->wallet = $wallet;
-
-        return $this;
-    }
-
-    public function getRate(): ?string
-    {
-        return $this->rate;
-    }
-
-    public function setRate(string $rate): self
-    {
-        $this->rate = $rate;
 
         return $this;
     }
