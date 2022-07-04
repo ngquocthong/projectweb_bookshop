@@ -42,10 +42,10 @@ class Reader
     #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
     private $wallet;
 
-    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: feedback::class)]
+    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Feedback::class)]
     private $feedback;
 
-    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: cart::class)]
+    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Cart::class)]
     private $cart;
 
     #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Order::class)]
@@ -172,14 +172,14 @@ class Reader
     }
 
     /**
-     * @return Collection<int, feedback>
+     * @return Collection<int, Feedback>
      */
     public function getFeedback(): Collection
     {
         return $this->feedback;
     }
 
-    public function addFeedback(feedback $feedback): self
+    public function addFeedback(Feedback $feedback): self
     {
         if (!$this->feedback->contains($feedback)) {
             $this->feedback[] = $feedback;

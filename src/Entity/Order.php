@@ -25,7 +25,7 @@ class Order
     #[ORM\ManyToOne(targetEntity: reader::class, inversedBy: 'orders')]
     private $reader;
 
-    #[ORM\OneToMany(mappedBy: 'orders', targetEntity: orderdetails::class)]
+    #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Orderdetails::class)]
     private $orderdetails;
 
     public function __construct()
@@ -75,14 +75,14 @@ class Order
     }
 
     /**
-     * @return Collection<int, orderdetails>
+     * @return Collection<int, Orderdetails>
      */
     public function getOrderdetails(): Collection
     {
         return $this->orderdetails;
     }
 
-    public function addOrderdetail(orderdetails $orderdetail): self
+    public function addOrderdetail(Orderdetails $orderdetail): self
     {
         if (!$this->orderdetails->contains($orderdetail)) {
             $this->orderdetails[] = $orderdetail;
