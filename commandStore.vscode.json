@@ -64,6 +64,11 @@
       "id": "a9952088-55ad-4ce3-af9c-296a56f8ecb5",
       "name": "make form",
       "commandLine": "php bin/console make:form"
+    },
+    {
+      "id": "bb933ee1-b0d3-42a4-a9f9-d44052391c4b",
+      "name": "force database",
+      "commandLine": "php bin/console doctrine:schema:update --force"
     }
   ]
 }
