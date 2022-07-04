@@ -92,7 +92,7 @@ class Order
         return $this;
     }
 
-    public function removeOrderdetail(orderdetails $orderdetail): self
+    public function removeOrderdetail(Orderdetails $orderdetail): self
     {
         if ($this->orderdetails->removeElement($orderdetail)) {
             // set the owning side to null (unless already changed)
