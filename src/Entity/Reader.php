@@ -189,7 +189,7 @@ class Reader
         return $this;
     }
 
-    public function removeFeedback(feedback $feedback): self
+    public function removeFeedback(Feedback $feedback): self
     {
         if ($this->feedback->removeElement($feedback)) {
             // set the owning side to null (unless already changed)
@@ -209,7 +209,7 @@ class Reader
         return $this->cart;
     }
 
-    public function addCart(cart $cart): self
+    public function addCart(Cart $cart): self
     {
         if (!$this->cart->contains($cart)) {
             $this->cart[] = $cart;
@@ -219,7 +219,7 @@ class Reader
         return $this;
     }
 
-    public function removeCart(cart $cart): self
+    public function removeCart(Cart $cart): self
     {
         if ($this->cart->removeElement($cart)) {
             // set the owning side to null (unless already changed)
