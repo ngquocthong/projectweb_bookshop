@@ -42,7 +42,7 @@ class Book
     #[ORM\ManyToOne(targetEntity: Cart::class, inversedBy: 'books')]
     private $cart;
 
-    #[ORM\OneToMany(mappedBy: 'book', targetEntity: OrderDetails::class)]
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Orderdetails::class)]
     private $orderdetails;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Authorbook::class)]
@@ -200,7 +200,7 @@ class Book
         return $this->orderdetails;
     }
 
-    public function addOrderdetail(OrderDetails $orderdetail): self
+    public function addOrderdetail(Orderdetails $orderdetail): self
     {
         if (!$this->orderdetails->contains($orderdetail)) {
             $this->orderdetails[] = $orderdetail;
@@ -210,7 +210,7 @@ class Book
         return $this;
     }
 
-    public function removeOrderdetail(OrderDetails $orderdetail): self
+    public function removeOrderdetail(Orderdetails $orderdetail): self
     {
         if ($this->orderdetails->removeElement($orderdetail)) {
             // set the owning side to null (unless already changed)
