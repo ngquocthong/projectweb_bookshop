@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use function PHPUnit\Framework\isNull;
+
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
 {
@@ -30,7 +32,7 @@ class Book
     #[ORM\Column(type: 'string', length: 255)]
     private $image;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable:true)]
     private $rate;
 
     #[ORM\Column(type: 'integer')]
