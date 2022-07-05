@@ -1,0 +1,8 @@
+{% extends 'baseadmin.html.twig' %}
+{% block body %}
+    <h1>Create new Orderdetails</h1>
+
+    {{ include('orderdetails/_form.html.twig') }}
+
+    <a href="{{ path('app_orderdetails_index') }}">Go back</a>
+{% endblock %}
