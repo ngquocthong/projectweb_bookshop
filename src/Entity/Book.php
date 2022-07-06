@@ -6,8 +6,7 @@ use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
-use function PHPUnit\Framework\isNull;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -29,7 +28,11 @@ class Book
     #[ORM\Column(type: 'date')]
     private $publishDate;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\File(
+        maxSize: '1024k',
+        mimeTypes: ['image/png', 'image/jpeg'],
+        mimeTypesMessage: 'Please upload a valid images',
+    )]
     private $image;
 
     #[ORM\Column(type: 'string', length: 255, nullable:true)]
