@@ -1,13 +1,11 @@
 {% extends 'baseadmin.html.twig' %}
 
-{% block title %}New Author
-{% endblock %}
+{% block title %}New Author{% endblock %}
 
 {% block body %}
     <h1>Create new Author</h1>
 
-	{{ include('author/_form.html.twig') }}
+    {{ include('author/_form.html.twig') }}
 
-	<a href="{{ path('app_author_index') }}">Go back</a>
-
+    <a href="{{ path('app_author_index') }}">Go back</a>
 {% endblock %}
