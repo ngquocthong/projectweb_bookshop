@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseadmin.html.twig' %}
 
 {% block title %}Publisher{% endblock %}
 
@@ -18,7 +18,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_publisher_index') }}">back to list</a>
+    <a href="{{ path('app_publisher_index') }}">Go back</a>
 
     <a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">edit</a>
 
