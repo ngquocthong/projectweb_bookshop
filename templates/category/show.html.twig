@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseadmin.html.twig' %}
 
 {% block title %}Category{% endblock %}
 
@@ -16,15 +16,12 @@
                 <td>{{ category.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Des</th>
                 <td>{{ category.description }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+    <a href="{{ path('app_category_index') }}">Go Back</a>
 
-    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
-
-    {{ include('category/_delete_form.html.twig') }}
 {% endblock %}
