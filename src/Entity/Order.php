@@ -22,12 +22,13 @@ class Order
     #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
     private $total;
 
-    #[ORM\ManyToOne(targetEntity: reader::class, inversedBy: 'orders')]
+    #[ORM\ManyToOne(targetEntity: Reader::class, inversedBy: 'orders')]
+   
     private $reader;
 
     #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Orderdetails::class)]
     private $orderdetails;
-
+   
     public function __construct()
     {
         $this->orderdetails = new ArrayCollection();
@@ -62,12 +63,12 @@ class Order
         return $this;
     }
 
-    public function getReader(): ?reader
+    public function getReader(): ?Reader
     {
         return $this->reader;
     }
 
-    public function setReader(?reader $reader): self
+    public function setReader(?Reader $reader): self
     {
         $this->reader = $reader;
 

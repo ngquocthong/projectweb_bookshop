@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\OrderdetailsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: OrderdetailsRepository::class)]
 class Orderdetails
@@ -20,14 +23,23 @@ class Orderdetails
     private $total;
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'orderdetails')]
+    #[ORM\JoinColumn(nullable: false)]
     private $book;
 
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'orderdetails')]
+    #[ORM\JoinColumn(nullable: false)]
     private $orders;
+
+
+    public function __construct()
+    {
+        $this->Category = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+        
     }
 
     public function getPrice(): ?string
@@ -77,4 +89,6 @@ class Orderdetails
 
         return $this;
     }
+
+
 }

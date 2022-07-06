@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Orderdetails</title>
+
+{% block body %}
+    <h1>Edit Orderdetails</h1>
+
+    {{ include('orderdetails/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_orderdetails_index') }}">Go back</a>
+
+    {{ include('orderdetails/_delete_form.html.twig') }}
+{% endblock %}

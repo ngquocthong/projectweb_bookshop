@@ -24,6 +24,8 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Book::class)]
     private $category;
 
+
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
