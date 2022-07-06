@@ -28,6 +28,8 @@ class Book
     #[ORM\Column(type: 'date')]
     private $publishDate;
 
+    
+    #[ORM\Column(type: 'string', length: 255)]
     #[Assert\File(
         maxSize: '1024k',
         mimeTypes: ['image/png', 'image/jpeg'],

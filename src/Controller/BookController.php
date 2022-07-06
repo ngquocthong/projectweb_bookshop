@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/book')]
 class BookController extends AbstractController
 {
@@ -29,6 +30,11 @@ class BookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('image')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('photos_directory'), $fileName);
+            
+            $book->setImage($fileName);
             $bookRepository->add($book, true);
 
             return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
@@ -50,7 +56,8 @@ class BookController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_book_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
-    {
+    {   
+    
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
