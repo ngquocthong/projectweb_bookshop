@@ -32,7 +32,7 @@ class Book
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\File(
         maxSize: '1024k',
-        mimeTypes: ['image/png', 'image/jpeg'],
+        mimeTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         mimeTypesMessage: 'Please upload a valid images',
     )]
     private $image;
