@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Form;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Book;
-use App\Entity\Publisher;
+use App\Entity\Author;
+use App\Form\AuthorType;
+use App\Form\CategoryType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,9 +24,7 @@ class BookType extends AbstractType
             ->add('image')
             ->add('printlength')
             ->add('category')
-            ->add('publisher')
-
-        ;
+            ->add('publisher');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -31,4 +33,5 @@ class BookType extends AbstractType
             'data_class' => Book::class,
         ]);
     }
+    
 }

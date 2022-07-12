@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AuthorbookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: AuthorbookRepository::class)]
 class Authorbook
 {
@@ -17,6 +18,7 @@ class Authorbook
     private $author;
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'book')]
+    #[ORM\JoinColumn(nullable: true)]
     private $book;
 
     public function getId(): ?int
