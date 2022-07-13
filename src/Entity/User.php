@@ -1,53 +1,53 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\ReaderRepository;
+
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\ORM\Mapping as ORM;
-
-#[ORM\Entity(repositoryClass: ReaderRepository::class)]
-class Reader implements UserInterface, PasswordAuthenticatedUserInterface
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $password;
-
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
-    #[ORM\Column(type: 'string', length: 255, nullable:true)]
-    private $phone;
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
-    #[ORM\Column(type: 'string', length: 255, nullable:true)]
+    #[ORM\Column(type: 'string')]
+    private $password;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $firstname;
 
-    #[ORM\Column(type: 'string', length: 255, nullable:true)]
+    #[ORM\Column(type: 'string', nullable: true, length: 255)]
     private $lastname;
 
-    #[ORM\Column(type: 'boolean', nullable:true)]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $gender;
 
-    #[ORM\Column(type: 'date', nullable:true)]
+    #[ORM\Column(type: 'date', nullable: true)]
     private $dateofbirth;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0', nullable:true)]
+    #[ORM\Column(type: 'decimal', precision: 10, scale: '0', nullable: true)]
     private $wallet;
 
-    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Feedback::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Feedback::class)]
     private $feedback;
 
-    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Cart::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private $cart;
 
-    #[ORM\OneToMany(mappedBy: 'reader', targetEntity: Order::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
     private $orders;
 
     public function __construct()
@@ -62,7 +62,19 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-        /**
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -113,43 +125,6 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
     }
 
     public function getFirstname(): ?string
@@ -205,7 +180,7 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->wallet;
     }
 
-    public function setWallet(string $wallet): self
+    public function setWallet(?string $wallet): self
     {
         $this->wallet = $wallet;
 
@@ -224,7 +199,7 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->feedback->contains($feedback)) {
             $this->feedback[] = $feedback;
-            $feedback->setReader($this);
+            $feedback->setUser($this);
         }
 
         return $this;
@@ -234,8 +209,8 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->feedback->removeElement($feedback)) {
             // set the owning side to null (unless already changed)
-            if ($feedback->getReader() === $this) {
-                $feedback->setReader(null);
+            if ($feedback->getUser() === $this) {
+                $feedback->setUser(null);
             }
         }
 
@@ -243,7 +218,7 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, cart>
+     * @return Collection<int, Cart>
      */
     public function getCart(): Collection
     {
@@ -254,7 +229,7 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->cart->contains($cart)) {
             $this->cart[] = $cart;
-            $cart->setReader($this);
+            $cart->setUser($this);
         }
 
         return $this;
@@ -264,8 +239,8 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->cart->removeElement($cart)) {
             // set the owning side to null (unless already changed)
-            if ($cart->getReader() === $this) {
-                $cart->setReader(null);
+            if ($cart->getUser() === $this) {
+                $cart->setUser(null);
             }
         }
 
@@ -284,7 +259,7 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
-            $order->setReader($this);
+            $order->setUser($this);
         }
 
         return $this;
@@ -294,11 +269,14 @@ class Reader implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->orders->removeElement($order)) {
             // set the owning side to null (unless already changed)
-            if ($order->getReader() === $this) {
-                $order->setReader(null);
+            if ($order->getUser() === $this) {
+                $order->setUser(null);
             }
         }
 
         return $this;
+    }
+    public function __toString() {
+        return $this->getLastname();
     }
 }

@@ -22,8 +22,8 @@ class Feedback
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'feedback')]
     private $book;
 
-    #[ORM\ManyToOne(targetEntity: Reader::class, inversedBy: 'feedback')]
-    private $reader;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'feedback')]
+    private $user;
 
     public function getId(): ?int
     {
@@ -66,14 +66,16 @@ class Feedback
         return $this;
     }
 
-    public function getReader(): ?Reader
+
+
+    public function getUser(): ?User
     {
-        return $this->reader;
+        return $this->user;
     }
 
-    public function setReader(?Reader $reader): self
+    public function setUser(?User $user): self
     {
-        $this->reader = $reader;
+        $this->user = $user;
 
         return $this;
     }

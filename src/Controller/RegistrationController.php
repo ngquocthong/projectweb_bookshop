@@ -6,11 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Reader;
-use App\Repository\ReaderRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Form\ReaderType;
-
+use App\Form\UserType;
 
 class RegistrationController extends AbstractController
 {
@@ -22,11 +21,11 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/registration', name:'registration')]
-    public function index(Request $request, UserPasswordHasherInterface $passwordEncoder, ReaderRepository $userRepo): Response
+    public function index(Request $request, UserPasswordHasherInterface $passwordEncoder, UserRepository $userRepo): Response
     {
-        $user = new Reader();
+        $user = new User();
 
-        $form = $this->createForm(ReaderType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
@@ -35,12 +34,12 @@ class RegistrationController extends AbstractController
             $user->setPassword($passwordEncoder->hashPassword($user, $user->getPassword()));
 
             // Set their role
-            //$user->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_USER']);
 
             // Save
             $userRepo->add($user, true);
 
-            return $this->redirectToRoute('app_homepage');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/index.html.twig', [
