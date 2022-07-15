@@ -5,74 +5,73 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Form\CartType;
 use App\Repository\CartRepository;
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\BookRepository;
+use App\Controller\SecurityController;
 
 #[Route('/cart')]
 class CartController extends AbstractController
 {
+    private $security;
+
+    public function __construct(SecurityController $security)
+    {
+        $this->security = $security;
+    }
+
     #[Route('/', name: 'app_cart_index', methods: ['GET'])]
     public function index(CartRepository $cartRepository): Response
     {
         return $this->render('cart/index.html.twig', [
-            'carts' => $cartRepository->findAll(),
+            'carts' => $cartRepository->findBy(array('user' => $this->security->getUser())),
         ]);
     }
 
-    #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CartRepository $cartRepository): Response
+    #[Route('/{id}', name: 'app_cart_new', methods: ['GET'])]
+    public function new(Request $request, BookRepository $productRepository, CartRepository $cartRepository): Response
     {
         $cart = new Cart();
+        $cart->setBook($productRepository->findOneBy(array('id' => $request->get('id'))));
+        $cart->setUser($this->security->getUser());
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
+        $cartRepository->add($cart, true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cartRepository->add($cart, true);
-
-            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('cart/new.html.twig', [
-            'cart' => $cart,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_cart_index');
     }
 
-    #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
-    public function show(Cart $cart): Response
-    {
-        return $this->render('cart/show.html.twig', [
-            'cart' => $cart,
-        ]);
-    }
+    // #[Route('/{id}/up', name: 'app_cart_up', methods: ['GET'])]
+    // public function up(Request $request, Cart $cart, CartRepository $cartRepository): Response
+    // {
+    //     $form = $this->createForm(CartType::class, $cart);
+    //     $cart->setQuantity($cart->getQuantity() + 1);
+    //     $form->handleRequest($request);
+    //     $cartRepository->add($cart, true);
+    //     return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    // }
+    // #[Route('/{id}/down', name: 'app_cart_down', methods: ['GET'])]
+    // public function down(Request $request, Cart $cart, CartRepository $cartRepository): Response
+    // {
+    //     $form = $this->createForm(CartType::class, $cart);
+    //     if ($cart->getQuantity() == 1) {
+    //         $cartRepository->remove($cart, true);
+    //     } else {
+    //         $cart->setQuantity($cart->getQuantity() - 1);
+    //         $form->handleRequest($request);
+    //         $cartRepository->add($cart, true);
+    //     }
+    //     return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    // }
 
-    #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cart $cart, CartRepository $cartRepository): Response
-    {
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cartRepository->add($cart, true);
-
-            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('cart/edit.html.twig', [
-            'cart' => $cart,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_cart_delete', methods: ['GET'])]
     public function delete(Request $request, Cart $cart, CartRepository $cartRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$cart->getId(), $request->request->get('_token'))) {
-            $cartRepository->remove($cart, true);
-        }
-
+        $cartRepository->remove($cart, true);
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
 }

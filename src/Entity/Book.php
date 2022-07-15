@@ -14,6 +14,7 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -46,8 +47,7 @@ class Book
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Feedback::class)]
     private $feedback;
 
-    #[ORM\ManyToOne(targetEntity: Cart::class, inversedBy: 'books')]
-    private $cart;
+
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Orderdetails::class)]
     private $orderdetails;
@@ -61,11 +61,19 @@ class Book
     #[ORM\ManyToOne(targetEntity: Publisher::class, inversedBy: 'publisher')]
     private $publisher;
 
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Cart::class)]
+    private $carts;
+
+
+
+
+
     public function __construct()
     {
         $this->feedback = new ArrayCollection();
         $this->orderdetails = new ArrayCollection();
         $this->book = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,17 +195,6 @@ class Book
         return $this;
     }
 
-    public function getCart(): ?Cart
-    {
-        return $this->cart;
-    }
-
-    public function setCart(?Cart $cart): self
-    {
-        $this->cart = $cart;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, OrderDetails>
@@ -285,4 +282,38 @@ class Book
     public function __toString() {
         return $this->getBook();
     }
+
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getBook() === $this) {
+                $cart->setBook(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+
 }
