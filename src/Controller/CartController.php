@@ -68,7 +68,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/delete', name: 'app_cart_delete', methods: ['GET'])]
+    #[Route('/{id}/delete', name: 'app_cart_delete', methods: ['POST'])]
     public function delete(Request $request, Cart $cart, CartRepository $cartRepository): Response
     {
         $cartRepository->remove($cart, true);
