@@ -33,10 +33,10 @@ class CartController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_cart_new', methods: ['GET'])]
-    public function new(Request $request, BookRepository $productRepository, CartRepository $cartRepository): Response
+    public function new(Request $request, BookRepository $bookRepository, CartRepository $cartRepository): Response
     {
         $cart = new Cart();
-        $cart->setBook($productRepository->findOneBy(array('id' => $request->get('id'))));
+        $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
         $cart->setUser($this->security->getUser());
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
