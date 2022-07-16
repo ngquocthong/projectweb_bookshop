@@ -10,7 +10,11 @@
             <tr>
                 <th>Id</th>
                 <th>Date</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Delivery</th>
                 <th>Total</th>
+
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,10 +23,13 @@
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
+                <td>{{ order.phone }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.delivery }}</td>
                 <td>{{ order.total }}</td>
                 <td>
-                    <a href="{{ path('app_order_show', {'id': order.id}) }}">show</a>
-                    <a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
+                    <a href="{{ path('app_order_show', {'id': order.id}) }}">Show</a>
+                    <a href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a>
                 </td>
             </tr>
         {% else %}

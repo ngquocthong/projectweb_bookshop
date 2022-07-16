@@ -33,10 +33,10 @@ class CartController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_cart_new', methods: ['GET'])]
-    public function new(Request $request, BookRepository $productRepository, CartRepository $cartRepository): Response
+    public function new(Request $request, BookRepository $bookRepository, CartRepository $cartRepository): Response
     {
         $cart = new Cart();
-        $cart->setBook($productRepository->findOneBy(array('id' => $request->get('id'))));
+        $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
         $cart->setUser($this->security->getUser());
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
@@ -45,28 +45,28 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart_index');
     }
 
-    // #[Route('/{id}/up', name: 'app_cart_up', methods: ['GET'])]
-    // public function up(Request $request, Cart $cart, CartRepository $cartRepository): Response
-    // {
-    //     $form = $this->createForm(CartType::class, $cart);
-    //     $cart->setQuantity($cart->getQuantity() + 1);
-    //     $form->handleRequest($request);
-    //     $cartRepository->add($cart, true);
-    //     return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-    // }
-    // #[Route('/{id}/down', name: 'app_cart_down', methods: ['GET'])]
-    // public function down(Request $request, Cart $cart, CartRepository $cartRepository): Response
-    // {
-    //     $form = $this->createForm(CartType::class, $cart);
-    //     if ($cart->getQuantity() == 1) {
-    //         $cartRepository->remove($cart, true);
-    //     } else {
-    //         $cart->setQuantity($cart->getQuantity() - 1);
-    //         $form->handleRequest($request);
-    //         $cartRepository->add($cart, true);
-    //     }
-    //     return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-    // }
+    #[Route('/{id}/up', name: 'app_cart_up', methods: ['GET'])]
+    public function up(Request $request, Cart $cart, CartRepository $cartRepository): Response
+    {
+        $form = $this->createForm(CartType::class, $cart);
+        $cart->setQuantity($cart->getQuantity() + 1);
+        $form->handleRequest($request);
+        $cartRepository->add($cart, true);
+        return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/{id}/down', name: 'app_cart_down', methods: ['GET'])]
+    public function down(Request $request, Cart $cart, CartRepository $cartRepository): Response
+    {
+        $form = $this->createForm(CartType::class, $cart);
+        if ($cart->getQuantity() == 1) {
+            $cartRepository->remove($cart, true);
+        } else {
+            $cart->setQuantity($cart->getQuantity() - 1);
+            $form->handleRequest($request);
+            $cartRepository->add($cart, true);
+        }
+        return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+    }
 
     #[Route('/{id}/delete', name: 'app_cart_delete', methods: ['GET'])]
     public function delete(Request $request, Cart $cart, CartRepository $cartRepository): Response

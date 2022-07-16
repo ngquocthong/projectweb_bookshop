@@ -22,6 +22,15 @@ class Cart
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'carts')]
     private $book;
 
+    #[ORM\Column(type: 'integer')]
+    private $quantity;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
+    private $total;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
+    private $price;
+
 
  
 
@@ -55,6 +64,42 @@ class Cart
     public function setBook(?Book $book): self
     {
         $this->book = $book;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(string $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

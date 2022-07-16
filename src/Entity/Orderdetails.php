@@ -29,8 +29,9 @@ class Orderdetails
     #[ORM\JoinColumn(nullable: false)]
     private $orders;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
-    private ?string $quantity = null;
+    #[ORM\Column]
+    private ?int $quantity = null;
+
 
 
     public function __construct()
@@ -81,12 +82,12 @@ class Orderdetails
         return $this;
     }
 
-    public function getQuantity(): ?string
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(string $quantity): self
+    public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
 
