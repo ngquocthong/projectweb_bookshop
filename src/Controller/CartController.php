@@ -38,6 +38,7 @@ class CartController extends AbstractController
         $cart = new Cart();
         $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
         $cart->setUser($this->security->getUser());
+        $cart->setQuantity(1);
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
         $cartRepository->add($cart, true);
