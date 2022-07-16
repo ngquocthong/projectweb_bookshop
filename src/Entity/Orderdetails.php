@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderdetailsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Nullable;
 
@@ -19,8 +20,6 @@ class Orderdetails
     #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
     private $price;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
-    private $total;
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'orderdetails')]
     #[ORM\JoinColumn(nullable: false)]
@@ -29,6 +28,9 @@ class Orderdetails
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'orderdetails')]
     #[ORM\JoinColumn(nullable: false)]
     private $orders;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+    private ?string $quantity = null;
 
 
     public function __construct()
@@ -54,17 +56,6 @@ class Orderdetails
         return $this;
     }
 
-    public function getTotal(): ?string
-    {
-        return $this->total;
-    }
-
-    public function setTotal(string $total): self
-    {
-        $this->total = $total;
-
-        return $this;
-    }
 
     public function getBook(): ?Book
     {
@@ -86,6 +77,18 @@ class Orderdetails
     public function setOrders(?Order $orders): self
     {
         $this->orders = $orders;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?string
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(string $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
