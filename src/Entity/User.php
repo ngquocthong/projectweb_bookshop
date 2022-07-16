@@ -32,14 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $lastname;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    private $gender;
-
-    #[ORM\Column(type: 'date', nullable: true)]
-    private $dateofbirth;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0', nullable: true)]
-    private $wallet;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Feedback::class)]
     private $feedback;
@@ -51,6 +43,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     private $carts;
+
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $phone = null;
 
     public function __construct()
     {
@@ -153,41 +151,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isGender(): ?bool
-    {
-        return $this->gender;
-    }
-
-    public function setGender(bool $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    public function getDateofbirth(): ?\DateTimeInterface
-    {
-        return $this->dateofbirth;
-    }
-
-    public function setDateofbirth(\DateTimeInterface $dateofbirth): self
-    {
-        $this->dateofbirth = $dateofbirth;
-
-        return $this;
-    }
-
-    public function getWallet(): ?string
-    {
-        return $this->wallet;
-    }
-
-    public function setWallet(?string $wallet): self
-    {
-        $this->wallet = $wallet;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Feedback>
@@ -282,6 +245,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function __toString() {
         return $this->getFirstname();
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 
 }
