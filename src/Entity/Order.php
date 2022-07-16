@@ -20,9 +20,6 @@ class Order
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
-    private $total;
-
     #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Orderdetails::class)]
     private $orderdetails;
 
@@ -35,8 +32,9 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $delivery = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $fullname = null;
    
     public function __construct()
     {
@@ -60,19 +58,6 @@ class Order
         return $this;
     }
 
-    public function getTotal(): ?string
-    {
-        return $this->total;
-    }
-
-    public function setTotal(string $total): self
-    {
-        $this->total = $total;
-
-        return $this;
-    }
-
-  
 
     /**
      * @return Collection<int, Orderdetails>
@@ -140,14 +125,14 @@ class Order
         return $this;
     }
 
-    public function getDelivery(): ?\DateTimeInterface
+    public function getFullname(): ?string
     {
-        return $this->delivery;
+        return $this->fullname;
     }
 
-    public function setDelivery(\DateTimeInterface $delivery): self
+    public function setFullname(string $fullname): self
     {
-        $this->delivery = $delivery;
+        $this->fullname = $fullname;
 
         return $this;
     }

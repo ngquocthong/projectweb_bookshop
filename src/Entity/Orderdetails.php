@@ -32,6 +32,12 @@ class Orderdetails
     #[ORM\Column]
     private ?int $quantity = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+    private ?string $total = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $deliverydate = null;
+
 
 
     public function __construct()
@@ -90,6 +96,30 @@ class Orderdetails
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(string $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getDeliverydate(): ?\DateTimeInterface
+    {
+        return $this->deliverydate;
+    }
+
+    public function setDeliverydate(\DateTimeInterface $deliverydate): self
+    {
+        $this->deliverydate = $deliverydate;
 
         return $this;
     }

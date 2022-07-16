@@ -1,30 +1,30 @@
-<!DOCTYPE html>
-
-<title>Order</title>
+{% extends 'basestore.html.twig' %}
 
 {% block body %}
-    <h1>Order</h1>
+	<div class="container" style="padding:100px;">
+		<h2 class="text-info" style="text-align:center;">Shopping Cart</h2>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ order.id }}</td>
+				</tr>
+				<tr>
+					<th>Date</th>
+					<td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Total</th>
+					<td>{{ order.total }}</td>
+				</tr>
+                
+			</tbody>
+		</table>
+	</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ order.id }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Total</th>
-                <td>{{ order.total }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<a href="{{ path('app_order_index') }}">back to list</a>
 
-    <a href="{{ path('app_order_index') }}">back to list</a>
+	<a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
 
-    <a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
-
-    {{ include('order/_delete_form.html.twig') }}
+	{{ include('order/_delete_form.html.twig') }}
 {% endblock %}

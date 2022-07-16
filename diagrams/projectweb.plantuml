@@ -58,14 +58,19 @@ class feedback{
 
 class order{
     + id: into
-    + date: data
+    + date: date
     + total: decimal
+    + phone : string
+    + address:  string
+    + fullname: string
 }
 
 class orderdetails{
     + id: int
+    + quantity: decimal
     + price: decimal
     + total: decimal
+    + deliverydate: date
 }
 
 class author{
