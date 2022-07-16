@@ -6,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+
                 <th>Date</th>
                 <th>Phone</th>
                 <th>Address</th>
@@ -19,12 +19,12 @@
         <tbody>
         {% for order in orders %}
             <tr>
-                <td>{{ order.id }}</td>
                 <td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
-                <td>{{ order.phone }}</td>
-                <td>{{ order.address }}</td>
+                <td>{{ order.user.phone }}</td>
+                <td>{{ order.user.address }}</td>
                 <td>{{ order.delivery }}</td>
                 <td>{{ order.total }}</td>
+
                 <td>
                     <a href="{{ path('app_order_show', {'id': order.id}) }}">Show</a>
                     <a href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a>

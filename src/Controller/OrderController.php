@@ -42,7 +42,7 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $orderRepository->add($order, true);
 
-            // $carts = $cartRepository->findBy(array('User' => $this->security->getUser()));
+            $carts = $cartRepository->findBy(array('User' => $this->security->getUser()));
 
             // foreach($carts as $cart) {
             //     $orderDetail = new Orderdetails();
