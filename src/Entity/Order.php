@@ -26,7 +26,7 @@ class Order
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
     private $user;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]

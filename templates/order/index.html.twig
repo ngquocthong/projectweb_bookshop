@@ -1,42 +1,35 @@
-{% extends 'basestore.html.twig' %}
+{% extends 'baseadmin.html.twig' %}
 
 {% block body %}
-<div class="container" style="padding:100px;">
-<h2 class="text-info" style="text-align:center;">Order</h2>
-    <table class="table">
-        <thead>
-            <tr>
-
-                <th>Date</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Delivery</th>
-                <th>Total</th>
-
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for order in orders %}
-            <tr>
-                <td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
-                <td>{{ order.user.phone }}</td>
-                <td>{{ order.user.address }}</td>
-                <td>{{ order.delivery }}</td>
-                <td>{{ order.total }}</td>
-
-                <td>
-                    <a href="{{ path('app_order_show', {'id': order.id}) }}">Show</a>
-                    <a href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_order_new') }}">Create new</a>
-{% endblock %}
+	<div class="container" style="padding:30px;">
+		<h2 class="text-info" style="text-align:center;">Order</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Fullname</th>
+					<th>Date</th>
+					<th>Phone</th>
+					<th>Address</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in orders %}
+					<tr>
+						<td>{{ order.id }}</td>
+						<td>{{ order.fullname }}</td>
+						<td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
+						<td>{{ order.phone }}</td>
+						<td>{{ order.address }}</td>
+						{# <a href="{{ path('app_order_show', {'id': order.id}) }}">Show</a> #}
+					    {# <a href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a> #}
+						{# <a class="btn btn-warning ms-2" href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a> #}
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}

@@ -17,7 +17,7 @@ class Orderdetails
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
+    #[ORM\Column(type: 'decimal', precision: 10, scale: '0', nullable: true)]
     private $price;
 
 
@@ -29,14 +29,16 @@ class Orderdetails
     #[ORM\JoinColumn(nullable: false)]
     private $orders;
 
-    #[ORM\Column]
-    private ?int $quantity = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0' , nullable: true)]
     private ?string $total = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE,  nullable: true)]
     private ?\DateTimeInterface $deliverydate = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $quantity = null;
 
 
 
@@ -88,17 +90,6 @@ class Orderdetails
         return $this;
     }
 
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
 
     public function getTotal(): ?string
     {
@@ -120,6 +111,18 @@ class Orderdetails
     public function setDeliverydate(\DateTimeInterface $deliverydate): self
     {
         $this->deliverydate = $deliverydate;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

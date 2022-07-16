@@ -42,17 +42,16 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $orderRepository->add($order, true);
 
-            // $carts = $cartRepository->findBy(array('User' => $this->security->getUser()));
+            $carts = $cartRepository->findBy(array('user' => $this->security->getUser()));
 
-            // foreach($carts as $cart) {
-            //     $orderDetail = new Orderdetails();
-            //     $orderDetail->setBook($cart->getBook());
-            //     $orderDetail->setOrders($order);
-            //     $orderDetailRepository->add($orderDetail,true);
-            //     $cartRepository->remove($cart,true);
-            // }
-
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
+            foreach($carts as $cart) {
+                $orderDetail = new Orderdetails();
+                $orderDetail->setBook($cart->getBook());
+                $orderDetail->setOrders($order);
+                $orderDetailRepository->add($orderDetail,true);
+                $cartRepository->remove($cart,true);
+            }
+            return $this->redirectToRoute('app_orderdetails_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('order/new.html.twig', [
