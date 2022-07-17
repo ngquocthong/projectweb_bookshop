@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Orderdetails;
 use App\Repository\OrderdetailsRepository;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use function Symfony\Component\String\s;
 
 #[Route('/order')]
@@ -27,7 +27,7 @@ class OrderController extends AbstractController
     } 
 
     #[Route('/', name: 'app_order_index', methods: ['GET'])]
-
+    #[IsGranted('ROLE_ADMIN', statusCode: 404, message: 'You have have right to access admin function.')]
     public function index(OrderRepository $orderRepository): Response
     {
         return $this->render('order/index.html.twig', [

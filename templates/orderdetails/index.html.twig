@@ -12,7 +12,7 @@
 
 					<th>Total</th>
 
-					<th>Actions</th>
+					{# <th>Actions</th> #}
 				</tr>
 			</thead>
 			<tbody>
@@ -23,10 +23,10 @@
 						<td>{{ orderdetail.quantity }}</td>
 						<td>{{ orderdetail.book.name }}</td>
 						<td>{{ orderdetail.quantity * orderdetail.book.price}}</td>
-						<td>
+						{# <td>
 							<a href="{{ path('app_orderdetails_show', {'id': orderdetail.id}) }}">show</a>
 							<a href="{{ path('app_orderdetails_edit', {'id': orderdetail.id}) }}">edit</a>
-						</td>
+						</td> #}
 					</tr>
 				{% else %}
 					<tr>

@@ -12,17 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/orderdetails')]
 class OrderdetailsController extends AbstractController
 {
 
-
-    #[Route('/', name: 'app_orderdetails_index', methods: ['GET'])]
-    public function index(OrderdetailsRepository $orderdetailsRepository): Response
+    #[Route('/{id}', name: 'app_orderdetails_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 404, message: 'You have have right to access admin function.')]
+    public function index(OrderdetailsRepository $orderdetailsRepository,Request $request): Response
     {
         return $this->render('orderdetails/index.html.twig', [
-            'orderdetails' => $orderdetailsRepository->findAll(),
+            'orderdetails' => $orderdetailsRepository->findBy(array('orders' => $request->get('id'))),
         ]);
     }
     #[Route('/form/{id}', name: 'app_orderdetails_form', methods: ['GET'])]
