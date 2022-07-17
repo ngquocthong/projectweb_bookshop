@@ -27,6 +27,7 @@ class OrderController extends AbstractController
     } 
 
     #[Route('/', name: 'app_order_index', methods: ['GET'])]
+
     public function index(OrderRepository $orderRepository): Response
     {
         return $this->render('order/index.html.twig', [
@@ -41,6 +42,7 @@ class OrderController extends AbstractController
             'orders' => $orderRepository->findBy(array('user' => $this->security->getUser())),
         ]);
     }
+
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OrderRepository $orderRepository, CartRepository $cartRepository, OrderdetailsRepository $orderdetailsRepository): Response
