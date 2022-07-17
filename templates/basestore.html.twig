@@ -12,14 +12,14 @@
 		<link rel="stylesheet" href="/assets/css/vanilla-zoom.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script>
-			$(document).ready(function(){
-			$("#myInput").on("keyup", function() {
-				var value = $(this).val().toLowerCase();
-				$("#myDIV *").filter(function() {
-				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-				});
-			});
-			});
+			$(document).ready(function () {
+$("#myInput").on("keyup", function () {
+var value = $(this).val().toLowerCase();
+$("#myDIV *").filter(function () {
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+});
+});
+});
 		</script>
 		
 
@@ -41,18 +41,18 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{path('app_books')}}">Books</a>
 						</li>
-					
+
 						<li class="nav-item">
 							<a class="nav-link" href="about-us.html">About Us</a>
 						</li>
 
 						{% if app.user %}
-						
+
 							<li class="nav-item">
 								<a class="nav-link" href="about-us.html">Hi,
 									{{ app.user.firstname }}</a>
 							</li>
-							
+
 							<li>
 								<a class="nav-link" href="{{ path('app_cart_index') }}">Cart</a>
 							</li>
@@ -78,9 +78,7 @@
 			</div>
 		</nav>
 
-		{% block body %}
-	 
-		{% endblock %}
+		{% block body %}{% endblock %}
 		<footer class="page-footer dark">
 			<div class="container">
 				<div class="row">
