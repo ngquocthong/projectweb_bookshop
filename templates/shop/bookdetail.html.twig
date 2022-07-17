@@ -22,8 +22,15 @@
 									<div class="price">
 										<h3>{{book.price}}$</h3>
 									</div>
-									<a href="{{path('app_cart_new', {'id': book.id})}}" <button class="btn btn-primary" type="button"><i class="icon-basket"></i>Add to Cart </a>
-								</a>
+                                    {% if app.user %}
+									<a href="{{path('app_cart_new', {'id': book.id})}}">
+                                    <button class="btn btn-primary" type="button" class="icon-basket">Add to Cart</button>
+									</a>
+                                    {% else %}
+                                    <a href="{{path('app_login')}}" >
+                                    <button class="btn btn-primary" type="button" class="icon-basket">Add to Cart</button>
+                                    </a>
+                                    {% endif %}
 								<div class="summary">
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Vestibulum diam risus, sagittis at fringilla at, pulvinar vel risus. Vestibulum dignissim eu nulla eu imperdiet. Morbi mollis tellus a nunc vestibulum consequat. Quisque tristique elit et nibh dapibus sodales. Nam sollicitudin a urna sed iaculis.</p>
 								</div>
@@ -40,7 +47,8 @@
 
 								<div class="review-item">
 									<span class="text-muted">
-										<a href="#">{{fb.user.firstname}}</a>, {{fb.datetime|date('Y-m-d H:i:s')}}</span>
+										<a href="#">{{fb.user.firstname}}</a>,
+										{{fb.datetime|date('Y-m-d H:i:s')}}</span>
 									<h3>{{fb.content}}</h3>
 								</div>
 							</div>
