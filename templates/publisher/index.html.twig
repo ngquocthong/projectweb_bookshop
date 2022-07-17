@@ -6,6 +6,7 @@
     <h1>Publisher</h1>
 
     <table class="table table-bordered text-center align-middle">
+    <input id="myInput" type="text" placeholder="Search..">
         <thead>
             <tr>
                 <th>Id</th>
@@ -13,7 +14,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody  id="myTable">
         {% for publisher in publishers %}
             <tr>
                 <td>{{ publisher.id }}</td>

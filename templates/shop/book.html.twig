@@ -13,11 +13,13 @@
 										<input type="text" name="search" placeholder="Search..">
 										<button type="submit" class="btn btn-primary btn-sm">Search</button>
 								</form>
-									<div class="filter-item">
-										<h2>Categories</h2>
+									<div class="filter-item ">
+									<div class="row d-flex bold justify-content-center">
+										<h3>Categories</h3>
+									</div>
 										{% for cate in categories %}
-											<div class="row">
-												<a class="h3" href="{{ path('app_book_cate', {'id': cate.id}) }}">{{cate.name}}</a>
+											<div class="row justify-content-center m-1	">
+												<a class="btn btn-outline-success	 btn-sm col-6" href="{{ path('app_book_cate', {'id': cate.id}) }}">{{cate.name}}</a>
 											</div>
 										{% endfor %}
 									</div>
@@ -43,13 +45,12 @@
 													<div class="about">
 														<div class="rating"><img src="/assets/img/star.svg"><img src="/assets/img/star.svg"><img src="/assets/img/star.svg"><img src="/assets/img/star-half-empty.svg"><img src="/assets/img/star-empty.svg"></div>
 														<div class="price">
-															<h3>{{book.price}}</h3>
+															<h3>${{book.price}}</h3>
 														</div>
 													</div>
 												</div>
 											</div>
 											{% else %}
-
 										{% endif %}
 									{% endfor %}
 								</div>

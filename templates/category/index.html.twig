@@ -4,9 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<h1>All Categoriess</h1>
+	<h1>All Categories</h1>
 	<div class="col-sm-12">
 		<div class=" rounded h-100 p-1">
+		<input id="myInput" type="text" placeholder="Search..">
 			<table class="table table-bordered text-center align-middle">
 				<thead>
 					<tr>
@@ -16,7 +17,7 @@
 						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody  id="myTable">
 					{% for category in categories %}
 						<tr>
 							<td>{{ category.id }}</td>

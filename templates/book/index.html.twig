@@ -14,9 +14,9 @@
 						<th>#</th>
 						<th>Name</th>
 						<th>Author</th>
+						<th>Category</th>
 						<th>Price</th>
 						<th>PublishDate</th>
-						<th>Rate</th>
 						<th>Length</th>
 						<th>Actions</th>
 					</tr>
@@ -26,10 +26,10 @@
 						<tr>
 							<td>{{ book.id }}</td>
 							<td>{{ book.name }}</td>
-							<td>{{ book.description }}</td>
-							<td>{{ book.price }}</td>
+							<td>{{ book.author }}</td>
+							<td>{{ book.category }}</td>
+							<td>{{ book.price }}$</td>
 							<td>{{ book.publishDate ? book.publishDate|date('Y-m-d') : '' }}</td>
-							<td>{{ book.rate }}</td>
 							<td>{{ book.printlength }}</td>
 							<td>
 								<div class="d-flex flex-row justify-content-center">

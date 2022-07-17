@@ -5,8 +5,12 @@
 		<section class="clean-block clean-hero" style="background-image:url(&quot;assets/img/tech/image4.jpg&quot;);color:rgba(9, 162, 255, 0.85);">
 			<div class="text">	
 							<h1>Welcome to Amazing Book! </h1>
+
+						{% if app.user %}
+						<a href="{{path('app_books')}}" class="btn btn-outline-light btn-lg" type="button">Get Started</a>
+						{% else %}
                         <a href="{{path('registration')}}" class="btn btn-outline-light btn-lg" type="button">Get Started</a>
-                        
+                        {% endif %}
 					</div>
 				</div>
 			</div>

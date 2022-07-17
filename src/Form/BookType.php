@@ -21,6 +21,7 @@ class BookType extends AbstractType
             ->add('name')
             ->add('price')
             ->add('author')
+            ->add('category')
             ->add('description')
             ->add('publishDate')
             ->add('image',Filetype::class,array('data_class'=> null))

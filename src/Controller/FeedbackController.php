@@ -47,7 +47,7 @@ class FeedbackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $feedbackRepository->add($feedback, true);
 
-            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_book_detail', ['id' => $request->get('id')], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('feedback/new.html.twig', [
