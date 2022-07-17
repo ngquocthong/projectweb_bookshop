@@ -24,6 +24,8 @@ class CartController extends AbstractController
         $this->security = $security;
     }
 
+   
+
     #[Route('/', name: 'app_cart_index', methods: ['GET'])]
     public function index(CartRepository $cartRepository): Response
     {
@@ -31,7 +33,15 @@ class CartController extends AbstractController
             'carts' => $cartRepository->findBy(array('user' => $this->security->getUser())),
         ]);
     }
+    #[Route('/show', name: 'app_cart_show', methods: ['GET'])]
+    public function show(CartRepository $cartRepository): response
+    {
+        return $this->render('cart/show.html.twig', [
+            'carts' => $cartRepository->findAll(),
+        ]);
+    }
 
+    
     #[Route('/{id}', name: 'app_cart_new', methods: ['GET'])]
     public function new(Request $request, BookRepository $bookRepository, CartRepository $cartRepository): Response
     {
@@ -75,4 +85,6 @@ class CartController extends AbstractController
         $cartRepository->remove($cart, true);
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }

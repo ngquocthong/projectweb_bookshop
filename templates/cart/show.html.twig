@@ -1,22 +1,41 @@
-{% extends 'basestore.html.twig' %}
-
-{% block title %}Cart{% endblock %}
+{% extends 'baseadmin.html.twig' %}
 
 {% block body %}
-    <h1>Cart</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ cart.id }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_cart_index') }}">back to list</a>
-
-    <a href="{{ path('app_cart_edit', {'id': cart.id}) }}">edit</a>
-
-    {{ include('cart/_delete_form.html.twig') }}
+	<h1>All Cart</h1>
+	<div class="col-sm-12">
+		<div class=" rounded h-100 p-1">
+			<table class="table table-bordered text-center align-middle">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>UserId</th>
+						<th>Book</th>
+						<th>Image</th>
+						<th>Quantity</th>
+						<th>Price</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for cart in carts %}
+						<tr>
+							<td>{{ cart.id }}</td>
+							<td>{{ cart.user.id}}</td>
+							<td>{{ cart.book.name }}</td>
+							<td><img src="/uploads/images/{{cart.book.image}}" style="width:100px"/></td>
+							<td>
+								{{ cart.quantity }}
+							</td>
+							<td>{{ cart.book.price}}</td>
+							<td>{{ cart.quantity * cart.book.price}}</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="3">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}

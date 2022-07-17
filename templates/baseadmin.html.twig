@@ -10,6 +10,8 @@
 
     <!-- Favicon -->
     <link href="/img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +52,7 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="/uploads/images/avt.jpg" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -60,10 +62,10 @@
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="{{path('app_category_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Category</a>
-                    <a href="{{path('app_book_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Book</a>
-                    <a href="{{path('app_author_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Author</a>
-                    <a href="{{path('app_publisher_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Publisher</a>
-                    <a href="{{path('app_cart_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Cart</a>
+                    <a href="{{path('app_book_index')}}" class="nav-item nav-link"><i class="fa fa-book"></i>Book</a>
+                    <a href="{{path('app_author_index')}}" class="nav-item nav-link"><i class="fa fa-user"></i>Author</a>
+                    <a href="{{path('app_publisher_index')}}" class="nav-item nav-link"><i class="fa fa-user"></i>Publisher</a>
+                    <a href="{{path('app_cart_show')}}" class="nav-item nav-link"><i class="fa fa-shopping-cart"></i>Cart</a>
                     <a href="{{path('app_order_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Order</a>
                     <a href="{{path('app_orderdetails_index')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Orderdetails</a>
                 </div>
