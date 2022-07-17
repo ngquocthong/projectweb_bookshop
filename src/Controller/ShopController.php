@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Feedback;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\FeedbackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,10 +51,14 @@ class ShopController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_book_detail', methods: ['GET'])]
-    public function show(Book $book): Response
+    public function show(Book $book, FeedbackRepository $feedbackRepository, Request $request): Response
     {
+
+        $feedback = $feedbackRepository->findBy(array('book'=>$request->get('id')));
+        
         return $this->render('shop/bookdetail.html.twig', [
             'book' => $book,
+            'feedback' => $feedback,
         ]);
     }
 

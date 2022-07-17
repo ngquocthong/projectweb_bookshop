@@ -4,6 +4,7 @@
 	<h1>All Cart</h1>
 	<div class="col-sm-12">
 		<div class=" rounded h-100 p-1">
+			<input id="myInput" type="text" placeholder="Search..">
 			<table class="table table-bordered text-center align-middle">
 				<thead>
 					<tr>
@@ -16,7 +17,7 @@
 						<th>Total</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="myTable">
 					{% for cart in carts %}
 						<tr>
 							<td>{{ cart.id }}</td>
