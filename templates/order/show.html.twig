@@ -26,7 +26,7 @@
 						<td>{{ order.address }}</td>
 						<td>{{ order.deliverydate ? order.deliverydate|date('Y-m-d') : '' }}</td>
 						<td>
-							<a href="{{ path('app_orderdetails_show', {'id': order.id}) }}">Show Orderdetails</a>
+							<a href="{{ path('app_orderdetails_form', {'id': order.id}) }}">Show Orderdetails</a>
 							{# <a href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a> #}
 							{# <a class="btn btn-warning ms-2" href="{{ path('app_order_edit', {'id': order.id}) }}">Conform</a></td> #}
 						</td>

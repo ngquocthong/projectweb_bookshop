@@ -16,6 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/orderdetails')]
 class OrderdetailsController extends AbstractController
 {
+
+
     #[Route('/', name: 'app_orderdetails_index', methods: ['GET'])]
     public function index(OrderdetailsRepository $orderdetailsRepository): Response
     {
@@ -23,11 +25,11 @@ class OrderdetailsController extends AbstractController
             'orderdetails' => $orderdetailsRepository->findAll(),
         ]);
     }
-    #[Route('/form', name: 'app_orderdetails_form', methods: ['GET'])]
+    #[Route('/form/{id}', name: 'app_orderdetails_form', methods: ['GET'])]
     public function index1(OrderdetailsRepository $orderdetailsRepository,Request $request, OrderRepository $orderRepository,UserRepository $userRepository): Response
     {
         return $this->render('orderdetails/_form.html.twig', [
-            'orderdetails' => $orderdetailsRepository->findBy(array('user' => $this->security->getUser())),
+            'orderdetails' => $orderdetailsRepository->findBy(array('orders' => $request->get('id'))),
         ]);
     }
 
