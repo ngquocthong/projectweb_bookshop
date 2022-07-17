@@ -47,14 +47,12 @@ class CartController extends AbstractController
     {
         $cart = new Cart();
         $i=0;
-        $j=0;
         $allCart = $cartRepository->findAll();
         foreach ($allCart as $oneCart) {
-            $cart_id[$j] = $oneCart->getId();
-            $oneCart = $cartRepository->findOneBy(array('id' => $cart_id[$j])); // arrray data of a cart 
+            $cart_id = $oneCart->getId();
+            $oneCart = $cartRepository->findOneBy(array('id' => $cart_id)); // arrray data of a cart 
             $book_id[$i] = $oneCart->getBook()->getId();
             $i++;
-
         }
         //$cart_id = ['64', '70'];
         //$book_id = ['13', '14'];
@@ -72,7 +70,7 @@ class CartController extends AbstractController
             $previousQuantity = $oneCart->getQuantity();
             $previousQuantity++;
             $oneCart->setQuantity($previousQuantity);
-            $cartRepository->add($cart, true);  
+            $cartRepository->add($oneCart, true);  
         }
         return $this->redirectToRoute('app_cart_index');
     }
