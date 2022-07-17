@@ -35,9 +35,10 @@ class ShopController extends AbstractController
             'books' => $books,
         ]);
     }
-    #[Route('/books/{ss}', name: 'app_books_search')]
+    #[Route('/books', name: 'app_books_search',methods: ['GET'])]
     public function search(CategoryRepository $repoCategory, BookRepository $repoBook, Request $request): Response
-    {
+    {   
+        $searchCate= $request->get('cate');
         $searchString = $request->get('search');
         $categories = $repoCategory->findAll();
         $books = $repoBook->findAll();
@@ -45,6 +46,7 @@ class ShopController extends AbstractController
             'searchString' => $searchString,
             'categories' => $categories,
             'books' => $books,
+
         ]);
     }
 
@@ -57,6 +59,21 @@ class ShopController extends AbstractController
         return $this->render('shop/bookdetail.html.twig', [
             'book' => $book,
             'feedback' => $feedback,
+        ]);
+    }
+
+    #[Route('/cate_book/{id}', name: 'app_book_cate',methods: ['GET'])]
+    public function cateFilter(CategoryRepository $repoCategory,BookRepository $repoBook, Request $request): Response
+    {   
+        $catefilter= $request->get('id');
+        $books = $repoBook->findBy(array('category'=>$catefilter));
+        $searchString = $request->get('search');
+        $categories = $repoCategory->findAll();
+        
+        return $this->render('shop/book.html.twig', [
+            'books' => $books,
+            'categories' => $categories,
+            'searchString' => $searchString,
         ]);
     }
 

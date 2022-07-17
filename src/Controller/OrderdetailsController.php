@@ -27,6 +27,7 @@ class OrderdetailsController extends AbstractController
         ]);
     }
     #[Route('/form/{id}', name: 'app_orderdetails_form', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'You have have right to access admin function.')]
     public function index1(OrderdetailsRepository $orderdetailsRepository,Request $request, OrderRepository $orderRepository,UserRepository $userRepository): Response
     {
         return $this->render('orderdetails/_form.html.twig', [
