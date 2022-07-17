@@ -1,11 +1,7 @@
 {% block title %}New Order{% endblock %}
 
 {% block body %}
-    <h1>Create new Order</h1>
-    
     {{ include('order/_form.html.twig') }}
-
-    <a href="{{ path('app_order_index') }}">Go Back</a>
 {% endblock %}
 
 
