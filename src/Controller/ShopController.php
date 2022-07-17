@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
