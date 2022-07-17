@@ -24,7 +24,7 @@ class CartController extends AbstractController
         $this->security = $security;
     }
 
-   
+
 
     #[Route('/', name: 'app_cart_index', methods: ['GET'])]
     public function index(CartRepository $cartRepository): Response
@@ -41,18 +41,39 @@ class CartController extends AbstractController
         ]);
     }
 
-    
+
     #[Route('/{id}', name: 'app_cart_new', methods: ['GET'])]
     public function new(Request $request, BookRepository $bookRepository, CartRepository $cartRepository): Response
     {
         $cart = new Cart();
-        $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
-        $cart->setUser($this->security->getUser());
-        $cart->setQuantity(1);
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-        $cartRepository->add($cart, true);
+        $i=0;
+        $j=0;
+        $allCart = $cartRepository->findAll();
+        foreach ($allCart as $oneCart) {
+            $cart_id[$j] = $oneCart->getId();
+            $oneCart = $cartRepository->findOneBy(array('id' => $cart_id[$j])); // arrray data of a cart 
+            $book_id[$i] = $oneCart->getBook()->getId();
+            $i++;
 
+        }
+        //$cart_id = ['64', '70'];
+        //$book_id = ['13', '14'];
+        if (!in_array($request->get('id'), $book_id)) {
+            //dd("NOT Exist");
+            $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
+            $cart->setUser($this->security->getUser());
+            $cart->setQuantity(1);
+            $form = $this->createForm(CartType::class, $cart);
+            $form->handleRequest($request);
+            $cartRepository->add($cart, true);
+        } else {
+
+            $oneCart = $cartRepository->findOneBy(array('book' => $request->get('id')));
+            $previousQuantity = $oneCart->getQuantity();
+            $previousQuantity++;
+            $oneCart->setQuantity($previousQuantity);
+            $cartRepository->add($cart, true);  
+        }
         return $this->redirectToRoute('app_cart_index');
     }
 
@@ -85,6 +106,4 @@ class CartController extends AbstractController
         $cartRepository->remove($cart, true);
         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    
 }
