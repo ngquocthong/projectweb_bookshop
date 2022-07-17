@@ -71,7 +71,7 @@ class CartController extends AbstractController
             $form->handleRequest($request);
             $cartRepository->add($cart, true);
         } else {
-
+            //dd("Exist");
             $oneCart = $cartRepository->findOneBy(array('book' => $request->get('id')));
             $previousQuantity = $oneCart->getQuantity();
             $previousQuantity++;
