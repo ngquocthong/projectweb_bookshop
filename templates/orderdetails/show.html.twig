@@ -1,23 +1,49 @@
-<!DOCTYPE html>
-
-<title>Orderdetails</title>
-
+{% extends 'baseadmin.html.twig' %}
 {% block body %}
-    <h1>Orderdetails</h1>
+	<div class="container" style="padding:30px;">
+		<h2 class="text-info" style="text-align:center;">Orderdetails</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>BookName</th>
+					<th>Fullname</th>
+					<th>Phone</th>
+					<th>Address</th>
+					<th>Deliverydate</th>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ orderdetails.name }}</td>
-            </tr>
+					<th>Total</th>
 
-        </tbody>
-    </table>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for orderdetail in orderdetails %}
+					<tr>
+						<td>{{ orderdetail.id }}</td>
+						<td>{{ orderdetail.book.price }}</td>
+						<td>{{ orderdetail.quantity }}</td>
+						<td>{{ orderdetail.book.name }}</td>
+						{# <td>{{ orderdetail.order.fullname }}</td>
+						<td>{{ orderdetail.order.phone }}</td>
+						<td>{{ orderdetail.order.address }}</td> #}
+						{# <td>{{ orderdetail.deliverydate }}</td> #}
 
-    <a href="{{ path('app_orderdetails_index') }}">back to list</a>
-
-    <a href="{{ path('app_orderdetails_edit', {'id': orderdetail.id}) }}">edit</a>
-
-    {{ include('orderdetails/_delete_form.html.twig') }}
+						
+						<td>{{ orderdetail.total }}</td>
+						<td>
+							<a class="btn btn-primary ms-2", href="{{ path('app_orderdetails_show', {'id': orderdetail.id}) }}">show</a>
+							<a href="{{ path('app_orderdetails_edit', {'id': orderdetail.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

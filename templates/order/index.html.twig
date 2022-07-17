@@ -11,6 +11,9 @@
 					<th>Date</th>
 					<th>Phone</th>
 					<th>Address</th>
+					<th>Deliverydate</th>
+
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,9 +24,13 @@
 						<td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
 						<td>{{ order.phone }}</td>
 						<td>{{ order.address }}</td>
-						{# <a href="{{ path('app_order_show', {'id': order.id}) }}">Show</a> #}
+						<td>{{ order.deliverydate }}</td>
+						<td>
+						<a class="btn btn-success", href="{{ path('app_orderdetails_index', {'id': order.id}) }}">Show Orderdetails</a>
+						<a class="btn btn-warning ms-2", href="{{ path('app_orderdetails_edit', {'id': order.id}) }}">Conform</a>
+						 </td>
 					    {# <a href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a> #}
-						{# <a class="btn btn-warning ms-2" href="{{ path('app_order_edit', {'id': order.id}) }}">Edit</a> #}
+						{# <a class="btn btn-warning ms-2" href="{{ path('app_order_edit', {'id': order.id}) }}">Conform</a></td> #}
 					</tr>
 				{% else %}
 					<tr>

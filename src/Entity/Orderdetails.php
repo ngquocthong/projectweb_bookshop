@@ -17,8 +17,7 @@ class Orderdetails
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0', nullable: true)]
-    private $price;
+
 
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'orderdetails')]
@@ -34,13 +33,9 @@ class Orderdetails
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0' , nullable: true)]
     private ?string $total = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE,  nullable: true)]
-    private ?\DateTimeInterface $deliverydate = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?int $quantity = null;
-
-
 
     public function __construct()
     {
@@ -53,17 +48,6 @@ class Orderdetails
         
     }
 
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
 
 
     public function getBook(): ?Book
@@ -103,29 +87,16 @@ class Orderdetails
         return $this;
     }
 
-    public function getDeliverydate(): ?\DateTimeInterface
-    {
-        return $this->deliverydate;
-    }
-
-    public function setDeliverydate(\DateTimeInterface $deliverydate): self
-    {
-        $this->deliverydate = $deliverydate;
-
-        return $this;
-    }
-
     public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(?int $quantity): self
+    public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
 
         return $this;
     }
-
 
 }

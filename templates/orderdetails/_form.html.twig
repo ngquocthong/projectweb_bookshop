@@ -1,25 +1,39 @@
-{{ form_start(form) }}
-    <div class="row">
-	<div class="col-md-6 col-lg-4">
-            <div class="form-group has-success">
-				{{ form_row(form.orders, {'attr': {'class': 'form-control'}}) }}
-			</div>
-            <div class="form-group">
-				{{ form_row(form.book, {'attr': {'class': 'form-control'}}) }}
-			</div>
-		    <div class="form-group has-success">
-			{{ form_row(form.price, {'attr': {'class': 'form-control'}}) }}
-			<div class="form-group">
-				{{ form_row(form.total, {'attr': {'class': 'form-control'}}) }}
-			</div>
-		</div>
+{% extends 'basestore.html.twig' %}
+{% block body %}
+	<div class="container" style="padding:100px;">
+		<h2 class="text-info" style="text-align:center;">Orderdetails</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>BookName</th>
+
+					<th>Total</th>
+
+					{# <th>Actions</th> #}
+				</tr>
+			</thead>
+			<tbody>
+				{% for orderdetail in orderdetails %}
+					<tr>
+						<td>{{ orderdetail.id }}</td>
+						<td>{{ orderdetail.book.price }}</td>
+						<td>{{ orderdetail.quantity }}</td>
+						<td>{{ orderdetail.book.name }}</td>
+						<td>{{ orderdetail.quantity * orderdetail.book.price}}</td>
+						{# <td>
+							<a href="{{ path('app_orderdetails_show', {'id': orderdetail.id}) }}">show</a>
+							<a href="{{ path('app_orderdetails_edit', {'id': orderdetail.id}) }}">edit</a>
+						</td> #}
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
-</div>
-<div class="row mt-3">
-	<div class="col-md-6 col-lg-4">
-		<div class="form-group">
-			<button class="btn btn-success">{{ button_label|default('Save') }}</button>
-		</div>
-	</div>
-</div>
-{{ form_end(form) }}
+{% endblock %}
