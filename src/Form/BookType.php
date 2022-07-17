@@ -7,6 +7,7 @@ use App\Entity\Book;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Form\CategoryType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,9 +20,10 @@ class BookType extends AbstractType
         $builder
             ->add('name')
             ->add('price')
+            ->add('author')
             ->add('description')
             ->add('publishDate')
-            ->add('image')
+            ->add('image',Filetype::class,array('data_class'=> null))
             ->add('printlength')
             ->add('category')
             ->add('publisher');

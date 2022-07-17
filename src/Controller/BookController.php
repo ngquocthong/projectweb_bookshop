@@ -23,8 +23,8 @@ class BookController extends AbstractController
             'books' => $bookRepository->findAll(),
         ]);
     }
-
     #[Route('/new', name: 'app_book_new', methods: ['GET', 'POST'])]
+
     public function new(Request $request, BookRepository $bookRepository): Response
     {
         $book = new Book();
