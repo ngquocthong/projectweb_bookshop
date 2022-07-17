@@ -36,6 +36,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/show', name: 'app_order_indexshow', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'You have have right to access admin function.')]
     public function index1(OrderRepository $orderRepository): Response
     {
         return $this->render('order/show.html.twig', [
@@ -45,6 +46,7 @@ class OrderController extends AbstractController
 
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'You have have right to access admin function.')]
     public function new(Request $request, OrderRepository $orderRepository, CartRepository $cartRepository, OrderdetailsRepository $orderdetailsRepository): Response
     {
         $order = new Order();
