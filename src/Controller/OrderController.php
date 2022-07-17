@@ -27,6 +27,7 @@ class OrderController extends AbstractController
     } 
 
     #[Route('/', name: 'app_order_index', methods: ['GET'])]
+
     public function index(OrderRepository $orderRepository): Response
     {
         return $this->render('order/index.html.twig', [
@@ -42,13 +43,14 @@ class OrderController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OrderRepository $orderRepository, CartRepository $cartRepository, OrderdetailsRepository $orderdetailsRepository): Response
     {
         $order = new Order();
+        $order->setUser($this->security->getUser());
         $cart = $cartRepository->findBy(array('user' => $this->security->getUser()));
-        $total = 0;     
-        
+        $total = 0;   
        
         foreach ($cart as $oneCart) {
            
@@ -78,4 +80,21 @@ class OrderController extends AbstractController
             'form' => $form,
         ]);
     } 
+    #[Route('/{id}/edit', name: 'app_order_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Order $order, OrderRepository $orderRepository): Response
+    {
+        $form = $this->createForm(OrderType::class, $order);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $orderRepository->add($order, true);
+
+            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('order/edit.html.twig', [
+            'order' => $order,
+            'form' => $form,
+        ]);
+    }
 }

@@ -14,10 +14,10 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('date')
-            ->add('date')
             ->add('fullname')
             ->add('phone')
             ->add('address')
+            ->add('deliverydate')
         ;
     }
 
