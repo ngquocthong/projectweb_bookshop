@@ -19,7 +19,7 @@
 				<tbody>
 					{% for feedback in feedback %}
 						<tr>
-                            <td>{{ feedback.user.id}}</td>
+                            <td>{{ user.id}}</td>
 							<td>{{ feedback.book}}</td>
 							<td>{{ feedback.content }}</td>
 							<td>{{ feedback.datetime ? feedback.datetime|date('Y-m-d') : '' }}</td>

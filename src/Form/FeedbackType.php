@@ -13,9 +13,9 @@ class FeedbackType extends AbstractType
     {
         $builder
             ->add('content')
-            ->add('datetime')
+         
             ->add('book')
-            ->add('user')
+    
         ;
     }
 
