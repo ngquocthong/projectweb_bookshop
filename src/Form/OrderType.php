@@ -17,7 +17,7 @@ class OrderType extends AbstractType
             ->add('fullname')
             ->add('phone')
             ->add('address')
-            ->add('deliverydate=2017/01/01')
+            ->add('deliverydate')
         ;
     }
 
