@@ -48,9 +48,11 @@ class CartController extends AbstractController
     public function new(Request $request, BookRepository $bookRepository, CartRepository $cartRepository): Response
     {
         $cart = new Cart();
-        $i=0;
+        $i = 0;
         $book_id = array();
+
         $allCart = $cartRepository->findBy(array('user' => $this->security->getUser()));
+            
 
         foreach ($allCart as $oneCart) {
             $cart_id = $oneCart->getId();
@@ -58,10 +60,10 @@ class CartController extends AbstractController
             $book_id[$i] = $oneCart->getBook()->getId();
             $i++;
         }
-       
+
         //$cart_id = ['64', '70'];
         //$book_id = ['13', '14'];
-    
+
         if (!in_array($request->get('id'), $book_id)) {
             //dd("NOT Exist");
             $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
@@ -72,14 +74,20 @@ class CartController extends AbstractController
             $cartRepository->add($cart, true);
         } else {
             //dd("Exist");
-            $oneCart = $cartRepository->findOneBy(array('book' => $request->get('id')));
-            $previousQuantity = $oneCart->getQuantity();
-            $previousQuantity++;
-            $oneCart->setQuantity($previousQuantity);
-            $cartRepository->add($oneCart, true);  
+            foreach ($allCart as $oneCart) {
+                if ($oneCart->getBook()->getId() == $request->get('id')) {
+                    $previousQuantity = $oneCart->getQuantity();
+                    $previousQuantity++;
+                    $oneCart->setQuantity($previousQuantity);
+                    $cartRepository->add($oneCart, true);
+                }
+            }
         }
+        $oneCart = 0;
         return $this->redirectToRoute('app_cart_index');
     }
+
+
 
     #[Route('/{id}/up', name: 'app_cart_up', methods: ['GET'])]
     public function up(Request $request, Cart $cart, CartRepository $cartRepository): Response
