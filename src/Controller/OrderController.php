@@ -28,14 +28,14 @@ class OrderController extends AbstractController
     public function index(OrderRepository $orderRepository): Response
     {
         return $this->render('order/index.html.twig', [
-            'orders' => $orderRepository->findAll(),
+            'orders' => $orderRepository->findBy(array('user' => $this->security->getUser())),
         ]);
     }
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OrderRepository $orderRepository, OrderdetailsRepository $orderDetailRepository, CartRepository $cartRepository): Response
     {
-        $order = new Order();
+        $order = new Order(); 
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
@@ -58,5 +58,5 @@ class OrderController extends AbstractController
             'order' => $order,
             'form' => $form,
         ]);
-    }
+    } 
 }

@@ -1,42 +1,41 @@
 {% extends 'basestore.html.twig' %}
 {% block body %}
-	<main class="page order-page">
-		<section class="clean-block clean-form dark">
-			<div class="container">
+	<section class="clean-block clean-form dark">
+		<div class="container">
 
-				<div class="row">
-					<div class="block-heading">
-						<h2 class="text-info">Create new Order</h2>
+			<div class="row">
+				<div class="block-heading">
+					<h2 class="text-info">Create new Order</h2>
+				</div>
+				{{ form_start(form) }}
+
+				<div class="form_group">
+					<div class="col-md-12 mb-3">
+						{{ form_row(form.fullname, {'attr': {'class': 'form-control'}}) }}
 					</div>
-					{{ form_start(form) }}
-
 					<div class="form_group">
 						<div class="col-md-12 mb-3">
-							{{ form_row(form.fullname, {'attr': {'class': 'form-control'}}) }}
+							{{ form_row(form.date, {'attr': {'class': 'form-control'}}) }}
 						</div>
-						<div class="form_group">
-							<div class="col-md-12 mb-3">
-								{{ form_row(form.date, {'attr': {'class': 'form-control'}}) }}
-							</div>
-						</div>
-						<div class="form_group">
-							<div class="col-md-12 mb-3">
-								{{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
-							</div>
-						</div>
-						<div class="form_group">
-							<div class="col-md-12 mb-3">
-								{{ form_row(form.address, {'attr': {'class': 'form-control'}}) }}
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-8 col-md-offset-4" style="margin-top:5px;">
-								<a class="btn btn-primary ms-2" href="{{path('app_order_new')}}">Save</a>
-							</div>
-						</div>
-					{{ form_end(form) }}
 					</div>
+					<div class="form_group">
+						<div class="col-md-12 mb-3">
+							{{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
+						</div>
+					</div>
+					<div class="form_group">
+						<div class="col-md-12 mb-3">
+							{{ form_row(form.address, {'attr': {'class': 'form-control'}}) }}
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-8 col-md-offset-4" style="margin-top:5px;">
+							<button class="btn btn-success">{{ button_label|default('Save') }}</button>
+						</div>
+					</div>
+					{{ form_end(form) }}
 				</div>
-			</section>
-		</main>
-	{% endblock %}
+			</div>
+		</div>
+	</section>
+{% endblock %}
