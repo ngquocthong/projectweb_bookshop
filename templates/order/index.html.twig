@@ -24,7 +24,7 @@
 						<td>{{ order.date ? order.date|date('Y-m-d') : '' }}</td>
 						<td>{{ order.phone }}</td>
 						<td>{{ order.address }}</td>
-						<td>{{ order.deliverydate ? order.date|date('Y-m-d') : '' }}</td>
+						<td>{{ order.deliverydate ? order.deliverydate|date('Y-m-d') : '' }}</td>
 						<td>
 						<div>
 						<a class="btn btn-success", href="{{ path('app_orderdetails_index', {'id': order.id}) }}">Show Orderdetails</a>
