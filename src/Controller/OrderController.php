@@ -71,6 +71,7 @@ class OrderController extends AbstractController
                 $orderdetails->setQuantity($oneCart->getQuantity());
                 $orderdetails->setTotal($oneCart->getBook()->getPrice() * $oneCart->getQuantity());
                 $orderdetailsRepository->add($orderdetails, true);
+                $cartRepository->remove($oneCart, true);
             }
             return $this->redirectToRoute('app_order_indexshow', [], Response::HTTP_SEE_OTHER);
         }
