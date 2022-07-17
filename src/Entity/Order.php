@@ -36,8 +36,10 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $fullname = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deliverydate = null;
+    #[ORM\Column(type: 'date')]
+    private $deliverydate;
+    // #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    // private ?\DateTimeInterface $deliverydate = null;
 
     #[ORM\Column]
     private ?int $total = null;
