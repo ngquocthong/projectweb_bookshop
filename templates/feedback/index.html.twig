@@ -10,7 +10,7 @@
 			<table class="table table-bordered text-center align-middle">
 				<thead>
 					<tr>
-						<th>UserId</th>
+						<th>User Name</th>
 						<th>Book name</th>
 						<th>Content</th>
 						<th>Date Time</th>
@@ -19,7 +19,7 @@
 				<tbody>
 					{% for feedback in feedback %}
 						<tr>
-                            <td>{{ user.id}}</td>
+                            <td>{{ user.firstname}}</td>
 							<td>{{ feedback.book}}</td>
 							<td>{{ feedback.content }}</td>
 							<td>{{ feedback.datetime ? feedback.datetime|date('Y-m-d') : '' }}</td>

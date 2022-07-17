@@ -24,7 +24,7 @@
 						<td>{{ orderdetail.book.name }}</td>
 						<td>{{ orderdetail.quantity * orderdetail.book.price}}</td>
 						<td>
-							<a class="btn btn-success ms-2" href="{{ path('app_feedback_new', {'id': orderdetail.id}) }}">Feedback</a>
+							<a class="btn btn-success ms-2" href="{{ path('app_feedback_new', {'id': orderdetail.book.id}) }}">Feedback</a>
 							{# <a href="{{ path('app_orderdetails_edit', {'id': orderdetail.id}) }}">edit</a> #}
 						</td>
 					</tr>
