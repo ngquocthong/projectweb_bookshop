@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/feedback')]
 class FeedbackController extends AbstractController
@@ -22,6 +23,7 @@ class FeedbackController extends AbstractController
         $this->security = $security;
     }
     #[Route('/', name: 'app_feedback_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 404, message: 'You have have right to access admin function.')]
     public function index(FeedbackRepository $feedbackRepository): Response
     {
         return $this->render('feedback/index.html.twig', [
@@ -45,7 +47,7 @@ class FeedbackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $feedbackRepository->add($feedback, true);
 
-            return $this->redirectToRoute('app_feedback_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('feedback/new.html.twig', [
