@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\BookRepository;
 use App\Controller\SecurityController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/cart')]
 class CartController extends AbstractController
@@ -34,6 +35,7 @@ class CartController extends AbstractController
         ]);
     }
     #[Route('/show', name: 'app_cart_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 404, message: 'You have have right to access admin function.')]
     public function show(CartRepository $cartRepository): response
     {
         return $this->render('cart/show.html.twig', [
@@ -47,15 +49,19 @@ class CartController extends AbstractController
     {
         $cart = new Cart();
         $i=0;
-        $allCart = $cartRepository->findAll();
+        $book_id = array();
+        $allCart = $cartRepository->findBy(array('user' => $this->security->getUser()));
+
         foreach ($allCart as $oneCart) {
             $cart_id = $oneCart->getId();
             $oneCart = $cartRepository->findOneBy(array('id' => $cart_id)); // arrray data of a cart 
             $book_id[$i] = $oneCart->getBook()->getId();
             $i++;
         }
+       
         //$cart_id = ['64', '70'];
         //$book_id = ['13', '14'];
+    
         if (!in_array($request->get('id'), $book_id)) {
             //dd("NOT Exist");
             $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
