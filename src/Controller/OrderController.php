@@ -51,10 +51,11 @@ class OrderController extends AbstractController
                 $orderDetail = new Orderdetails();
                 $orderDetail->setBook($cart->getBook());
                 $orderDetail->setOrders($order);
+                $orderDetail->setQuantity($cart->getQuantity());
                 $orderDetailRepository->add($orderDetail,true);
                 $cartRepository->remove($cart,true);
             }
-            return $this->redirectToRoute('app_orderdetails_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_orderdetails_form', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('order/new.html.twig', [
