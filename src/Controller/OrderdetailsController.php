@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Orderdetails;
 use App\Form\OrderdetailsType;
+use App\Repository\BookRepository;
+use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use App\Repository\OrderdetailsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +23,18 @@ class OrderdetailsController extends AbstractController
             'orderdetails' => $orderdetailsRepository->findAll(),
         ]);
     }
+    #[Route('/form', name: 'app_orderdetails_form', methods: ['GET'])]
+    public function index1(OrderdetailsRepository $orderdetailsRepository,Request $request, OrderRepository $orderRepository,UserRepository $userRepository): Response
+    {
+        return $this->render('orderdetails/_form.html.twig', [
+            'orderdetails' => $orderdetailsRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_orderdetails_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, OrderdetailsRepository $orderdetailsRepository): Response
+    public function new(Request $request, OrderdetailsRepository $orderdetailsRepository, BookRepository $bookRepository): Response
     {
+        
         $orderdetail = new Orderdetails();
         $form = $this->createForm(OrderdetailsType::class, $orderdetail);
         $form->handleRequest($request);
@@ -41,22 +52,23 @@ class OrderdetailsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_orderdetails_show', methods: ['GET'])]
-    public function indexbyid(int $id, OrderdetailsRepository $ordeRepo): Response
+    public function indexbyid(int $id, Request $request,OrderdetailsRepository $ordeRepo, BookRepository $bookRepository,OrderRepository $orderRepository): Response
     {
-        $listDetail = array();;
-
-        
-        foreach ($ordeRepo->findAll() as $sizedet){
-            dd($sizedet);
-            if($sizedet->getBook()->getId() == 1){
-                $listDetail[] = $sizedet;
+        // $listDetail = array();
+        $orderdetail = new Orderdetails();
+        $orderdetail->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
+        $orderdetail->setOrders($orderRepository->findOneBy(array('id' => $request->get('id'))));
+        // foreach ($ordeRepo->findAll() as $sizedet){
+        //     // dd($sizedet);
+        //     if($sizedet->getBook()->getId() == 1){
+        //         $listDetail[] = $sizedet;
                 
-            }
-        }
-        
-        return $this->renderForm('orderdetails/show.html.twig', [
-            'orderdetails' => $listDetail,
-        ]); 
+        //     }
+        // }
+        return $this->redirectToRoute('app_orderdetails_form', [], Response::HTTP_SEE_OTHER);
+        // return $this->renderForm('orderdetails/show.html.twig', [
+        //     'orderdetails' => $listDetail,
+        // ]); 
     }
 
 
@@ -87,4 +99,5 @@ class OrderdetailsController extends AbstractController
 
         return $this->redirectToRoute('app_orderdetails_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

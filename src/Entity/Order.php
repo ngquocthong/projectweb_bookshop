@@ -35,6 +35,13 @@ class Order
 
     #[ORM\Column(length: 255)]
     private ?string $fullname = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $deliverydate = null;
+
+    #[ORM\Column]
+    private ?int $total = null;
+    
    
     public function __construct()
     {
@@ -136,4 +143,29 @@ class Order
 
         return $this;
     }
+
+    public function getDeliverydate(): ?\DateTimeInterface
+    {
+        return $this->deliverydate;
+    }
+
+    public function setDeliverydate(\DateTimeInterface $deliverydate): self
+    {
+        $this->deliverydate = $deliverydate;
+
+        return $this;
+    }
+
+    public function getTotal(): ?int
+    {
+        return $this->total;
+    }
+
+    public function setTotal(int $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
 }

@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\CartRepository;
-use App\Repository\UserRepository;
+use App\Repository\BookRepository;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,28 +34,43 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, OrderRepository $orderRepository,UserRepository $userRepository, OrderdetailsRepository $orderDetailRepository, CartRepository $cartRepository): Response
+    #[Route('/show', name: 'app_order_indexshow', methods: ['GET'])]
+    public function index1(OrderRepository $orderRepository): Response
     {
-        $order = new Order(); 
-        $order->setUser($this->security->getUser());
+        return $this->render('order/show.html.twig', [
+            'orders' => $orderRepository->findBy(array('user' => $this->security->getUser())),
+        ]);
+    }
+
+    #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, OrderRepository $orderRepository, CartRepository $cartRepository, OrderdetailsRepository $orderdetailsRepository): Response
+    {
+        $order = new Order();
+        $cart = $cartRepository->findBy(array('user' => $this->security->getUser()));
+        $total = 0;     
+        
+       
+        foreach ($cart as $oneCart) {
+           
+           $total += ($oneCart->getBook()->getPrice() * $oneCart->getQuantity());
+        }
+
+        $order->setTotal($total);
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $orderRepository->add($order, true);
-            
-            $carts = $cartRepository->findBy(array('user' => $this->security->getUser()));
-            // $order->setUser($userRepository->findOneBy(array('id' => $request->get('id'))));
-            foreach($carts as $cart) {
-                $orderDetail = new Orderdetails();
-                $orderDetail->setBook($cart->getBook());
-                $orderDetail->setOrders($order);
-                $orderDetail->setQuantity($cart->getQuantity());
-                $orderDetailRepository->add($orderDetail,true);
-                $cartRepository->remove($cart,true);
+            foreach ($cart as $oneCart) {
+                $orderdetails = new Orderdetails();
+                $orderdetails->setBook($oneCart->getBook());
+                $orderdetails->setOrders($order);
+                $orderdetails->setQuantity($oneCart->getQuantity());
+                $orderdetails->setTotal($oneCart->getBook()->getPrice() * $oneCart->getQuantity());
+                $orderdetailsRepository->add($orderdetails, true);
             }
-            return $this->redirectToRoute('app_orderdetails_form', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_order_indexshow', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('order/new.html.twig', [
