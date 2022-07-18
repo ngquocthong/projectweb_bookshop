@@ -1,8 +1,9 @@
 {% extends 'baseadmin.html.twig' %}
 
 {% block body %}
-	<div class="container" style="padding:30px;">
+	<div class="container" style="padding:10px;">
 		<h2 class="text-info" style="text-align:center;">Order</h2>
+		<input id="myInput" type="text" placeholder="Search..">
 		<table class="table">
 			<thead>
 				<tr>
@@ -16,7 +17,7 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="myTable">
 				{% for order in orders %}
 					<tr>
 						<td>{{ order.id }}</td>
