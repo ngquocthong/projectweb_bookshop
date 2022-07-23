@@ -20,7 +20,7 @@
 				<tbody id="myTable">
 					{% for feedback in feedback %}
 						<tr>
-							<td>{{ user.firstname}}</td>
+							<td>{{ feedback.user.firstname}}</td>
 							<td>{{ feedback.book}}</td>
 							<td>{{ feedback.content }}</td>
 							<td>{{ feedback.datetime ? feedback.datetime|date('Y-m-d') : '' }}</td>
