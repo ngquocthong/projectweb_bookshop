@@ -52,8 +52,6 @@ class Book
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Orderdetails::class)]
     private $orderdetails;
 
-    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Authorbook::class)]
-    private $book;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'category')]
     private $category;
@@ -63,9 +61,6 @@ class Book
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Cart::class)]
     private $carts;
-
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
 
 
 
@@ -229,35 +224,8 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection<int, Authorbook>
-     */
-    public function getBook(): Collection
-    {
-        return $this->book;
-    }
 
-    public function addBook(Authorbook $book): self
-    {
-        if (!$this->book->contains($book)) {
-            $this->book[] = $book;
-            $book->setBook($this);
-        }
 
-        return $this;
-    }
-
-    public function removeBook(Authorbook $book): self
-    {
-        if ($this->book->removeElement($book)) {
-            // set the owning side to null (unless already changed)
-            if ($book->getBook() === $this) {
-                $book->setBook(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getCategory(): ?Category
     {
@@ -317,17 +285,6 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
 
 
 
