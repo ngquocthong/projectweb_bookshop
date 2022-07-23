@@ -21,8 +21,7 @@
                 <td>{{ publisher.name }}</td>
                 <td>
                     <div class="d-flex flex-row justify-content-center">
-								<a class="btn btn-primary ms-2" href="{{ path('app_publisher_show', {'id': publisher.id}) }}">Details</a>
-								<a class="btn btn-warning ms-2" href="{{ path('app_publisher_show', {'id': publisher.id}) }}">Edit</a>
+								<a class="btn btn-warning ms-2" href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">Edit</a>
 								{{ include('publisher/_delete_form.html.twig') }}
 								</div>
                 </td>

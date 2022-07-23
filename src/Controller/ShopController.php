@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Book;
-use App\Entity\Feedback;
-use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\FeedbackRepository;
@@ -38,7 +36,7 @@ class ShopController extends AbstractController
     #[Route('/books', name: 'app_books_search',methods: ['GET'])]
     public function search(CategoryRepository $repoCategory, BookRepository $repoBook, Request $request): Response
     {   
-        $searchCate= $request->get('cate');
+        //$searchCate= $request->get('cate');
         $searchString = $request->get('search');
         $categories = $repoCategory->findAll();
         $books = $repoBook->findAll();
@@ -49,19 +47,7 @@ class ShopController extends AbstractController
 
         ]);
     }
-
-    #[Route('/{id}', name: 'app_book_detail', methods: ['GET'])]
-    public function show(Book $book, FeedbackRepository $feedbackRepository, Request $request): Response
-    {
-
-        $feedback = $feedbackRepository->findBy(array('book'=>$request->get('id')));
-        
-        return $this->render('shop/bookdetail.html.twig', [
-            'book' => $book,
-            'feedback' => $feedback,
-        ]);
-    }
-
+    
     #[Route('/cate_book/{id}', name: 'app_book_cate',methods: ['GET'])]
     public function cateFilter(CategoryRepository $repoCategory,BookRepository $repoBook, Request $request): Response
     {   
@@ -74,6 +60,18 @@ class ShopController extends AbstractController
             'books' => $books,
             'categories' => $categories,
             'searchString' => $searchString,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_book_detail', methods: ['GET'])]
+    public function show(Book $book, FeedbackRepository $feedbackRepository, Request $request): Response
+    {
+
+        $feedback = $feedbackRepository->findBy(array('book'=>$request->get('id')));
+        
+        return $this->render('shop/bookdetail.html.twig', [
+            'book' => $book,
+            'feedback' => $feedback,
         ]);
     }
 

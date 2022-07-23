@@ -62,7 +62,8 @@ class Book
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Cart::class)]
     private $carts;
 
-
+    #[ORM\Column(length: 255)]
+    private ?string $author = null;
 
 
 
@@ -91,6 +92,17 @@ class Book
         return $this;
     }
 
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    } 
     public function getPrice(): ?float
     {
         return $this->price;
