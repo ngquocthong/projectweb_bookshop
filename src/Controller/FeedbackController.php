@@ -24,11 +24,14 @@ class FeedbackController extends AbstractController
     }
     #[Route('/', name: 'app_feedback_index', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', statusCode: 404, message: 'You have have right to access admin function.')]
-    public function index(FeedbackRepository $feedbackRepository): Response
+    public function index(FeedbackRepository $feedbackRepository, UserRepository $userRepository, Request $request): Response
     {
+        $feedback = new Feedback();
+        $feedback->setUser($userRepository->findOneBy(array('id' => $request->get('id'))));
+        // dd($userRepository->findAll());
         return $this->render('feedback/index.html.twig', [
-            'feedback' => $feedbackRepository->findBy(array('user' => $this->security->getUser())),
-            'user' => $this->security->getUser(),
+            'feedback' => $feedbackRepository->findAll(),
+            'user' => $userRepository->findAll(),
         ]);
     }
 

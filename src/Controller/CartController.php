@@ -56,16 +56,12 @@ class CartController extends AbstractController
 
         foreach ($allCart as $oneCart) {
             $cart_id = $oneCart->getId();
-            $oneCart = $cartRepository->findOneBy(array('id' => $cart_id)); // arrray data of a cart 
+            $oneCart = $cartRepository->findOneBy(array('id' => $cart_id));
             $book_id[$i] = $oneCart->getBook()->getId();
             $i++;
         }
 
-        //$cart_id = ['64', '70'];
-        //$book_id = ['13', '14'];
-
         if (!in_array($request->get('id'), $book_id)) {
-            //dd("NOT Exist");
             $cart->setBook($bookRepository->findOneBy(array('id' => $request->get('id'))));
             $cart->setUser($this->security->getUser());
             $cart->setQuantity(1);
@@ -73,7 +69,6 @@ class CartController extends AbstractController
             $form->handleRequest($request);
             $cartRepository->add($cart, true);
         } else {
-            //dd("Exist");
             foreach ($allCart as $oneCart) {
                 if ($oneCart->getBook()->getId() == $request->get('id')) {
                     $previousQuantity = $oneCart->getQuantity();
